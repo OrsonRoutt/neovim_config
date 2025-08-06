@@ -35,16 +35,16 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     cmd = "Grapple",
   },
-  {
+  { -- Telescope
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-telescope/telescope-fzf-native.nvim" },
     opts = function() require("configs.telescope") end,
   },
-  {
+  { -- Telescope Native FZF
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make"
   },
-  {
+  { -- Conform
     "stevearc/conform.nvim",
     enabled = false,
   },
