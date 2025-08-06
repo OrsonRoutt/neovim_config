@@ -1,0 +1,50 @@
+*general* General help for all installed plugins.
+
+==============================================================================
+CONTENTS                                                      *general.contents*
+
+1. `Navigation`                                    |general.navigation|
+  1.1 In-File Navigation                         |general.in_file_navigation|
+    1.1a In-File Movement
+    1.1b In-File Searching
+  1.2 Buffer Navigation                          |general.buffer_navigation|
+  1.3 File Navigation                            |general.file_navigation|
+    1.3a nvim-tree                               |general.nvim-tree|
+    1.3b Telescope
+  1.4 Special Navigation Keybinds                |general.special_navigation|
+
+2. `Buffers, Tabs, & Tabufline`                    |general.buffer_tab|
+  2.1 Buffers                                    |general.buffers|
+  2.2 Tabs                                       |general.tabs|
+  2.3 NVChad Tabufline                           |general.tabufline|
+
+3. `Searching`                                     |general.searching|
+  3.1 Telescope                                  |general.telescope|
+  3.2 Quickfix List                              |general.quickfix|
+  3.3 LSP Searching                              |general.lsp_search|
+
+4. `LSP`                                           |general.lsp|
+  4.1 Specific LSPs                              |general.lsps|
+    4.1a clangd                                  |general.clangd|
+    4.1b gdscript                                |general.gdscript|
+
+==============================================================================
+1. Navigation                                               *general.navigation*
+
+Navigation in NeoVim is generally done using the `h`, `j`, `k`, & `l` keys for
+cardinal directions. Navigations which does not use this can sometimes use `u`
+and `d` to indicate '[u]p' and '[d]own', `g` to for '[g]o', `f` for '[f]ind', or some
+non-generic atomic operation.
+
+Most navigation in this configuration follows this standard, although
+there are some exceptions.
+
+------------------------------------------------------------------------------
+1.1 In-File Navigation                              *general.in_file_navigation*
+
+
+
+`|=====================|`
+ `1.1a In-File Movement`
+
+
