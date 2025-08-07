@@ -26,9 +26,7 @@ require("lazy").setup({
 -- Load theme.
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
-if require("nvconfig").base46.transparency then
-  require("base46").toggle_transparency()
-end
+require("base46").load_all_highlights()
 
 -- Setup options/autocmds/mappings.
 require("options")
