@@ -1,6 +1,7 @@
--- NeoVim folders.
+-- NeoVilm folders.
 vim.api.nvim_create_user_command("Cfg", ":cd " .. vim.fn.stdpath("config") .. "<BAR>:e init.lua", {})
 vim.api.nvim_create_user_command("Data", ":cd " .. vim.fn.stdpath("data"), {})
+vim.api.nvim_create_user_command("Wez", ":cd ~<BAR>:e .wezterm.lua", {})
 -- Computer-specific folders.
 vim.api.nvim_create_user_command("Gitdir", ":cd ~/Documents/GitHub/", {})
 vim.api.nvim_create_user_command("Cpp", ":cd ~/Documents/GitHub/cpp_projects/", {})

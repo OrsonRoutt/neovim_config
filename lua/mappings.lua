@@ -106,7 +106,7 @@ map("n", "<leader><M-q>", "<cmd>:lclose<CR>", { desc = "loclist close" })
 
 -- Base46 theme toggle.
 map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
-map("n", "<leader>tT", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
+map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
 
 -- Terminal remapping.
 unmap("t", "<C-x>")

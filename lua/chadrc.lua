@@ -19,6 +19,9 @@ M.ui = {
       end,
     },
   },
+  tabufline = {
+    order = { "treeOffset", "buffers", "tabs" },
+  },
 }
 
 M.term = {
