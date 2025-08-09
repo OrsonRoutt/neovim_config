@@ -1,6 +1,9 @@
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
+
+  install = { colorscheme = {"nvchad"}},
+
+  spec = { import = "plugins" },
 
   ui = {
     icons = {

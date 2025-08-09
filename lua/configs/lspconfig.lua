@@ -1,25 +1,66 @@
-require("nvchad.configs.lspconfig").defaults()
+dofile(vim.g.base46_cache .. "lsp")
+require("nvchad.lsp").diagnostic_config()
 
+local map = vim.keymap.set
 local lspconfig = require("lspconfig")
-local nvlsp = require("nvchad.configs.lspconfig")
+
+local function on_attach(_, bufnr)
+  local function opts(desc)
+    return { buffer = bufnr, desc = "LSP " .. desc }
+  end
+
+  map("n", "gD", vim.lsp.buf.declaration, opts("go to declaration"))
+  map("n", "gd", vim.lsp.buf.definition, opts("go to definition"))
+  map("n", "<leader>D", vim.lsp.buf.type_definition, opts("go to type definition"))
+  map("n", "<leader>ra", require("scripts.lsp_rename"), opts("rename"))
+end
+
+local function on_init(client, _)
+  if client.supports_method "textDocument/semanticTokens" then
+    client.server_capabilities.semanticTokensProvider = false
+    client.server_capabilities.documentFormattingProvider = false
+  end
+end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Default configured servers.
-local servers = { "gdscript", "sqls", "phpactor" }
-for _, lsp in ipairs(servers) do
+for _, lsp in ipairs({"gdscript", "sqls", "phpactor"}) do
   lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
   }
 end
 
 -- clangd
 lspconfig.clangd.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
   cmd = {
     "clangd",
     "--query-driver=/usr/local/bin/g++-14",
   },
+}
+
+-- lua_ls
+lspconfig.lua_ls.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      workspace = {
+        library = {
+          vim.fn.expand("$VIMRUNTIME/lua"),
+          vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
+          vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
+          "${3rd}/luv/library",
+        },
+      },
+    },
+  },
+  cmd = { "lua-language-server", "--force-accept-workspace" },
 }

@@ -10,17 +10,16 @@ CONTENTS                                                         *user.contents*
     1.1c In-File Searching                       |user.in_file_searching|
   1.2 Buffer Navigation                          |user.buffer_navigation|
   1.3 File Navigation                            |user.file_navigation|
-    1.3a nvim-tree                               |user.nvim-tree|
-    1.3b Telescope                               |user.telescope_file|
-    1.3c Grapple                                 |user.grapple|
+    1.3a Telescope                               |user.telescope_file|
+    1.3b Grapple                                 |user.grapple|
+    1.3c Yazi                                    |user.yazi|
   1.4 Special Navigation Keybinds                |user.special_navigation|
 
 2. `Editing`                                       |user.editing|
 
-3. `Buffers, Tabs, & Tabufline`                    |user.buffer_tab|
+3. `Buffers & Tabs`                                |user.buffer_tab|
   3.1 Buffers                                    |user.buffers|
   3.2 Tabs                                       |user.tabs|
-  3.3 NVChad Tabufline                           |user.tabufline|
 
 4. `Searching`                                     |user.searching|
   4.1 Telescope                                  |user.telescope|
@@ -96,8 +95,8 @@ different flavors, these are all useful to some extent:
 - `g_` takes you the the last non-blank character and [count] (this is not
   very useful as you don't see this often and it doesn't persist like `$`).
 - Prefixing one of the non-up/down keys with `g` (`g0`, `g$`, or `g^`) does
-the same thing but on the screen line. `g<END>` acts like the `g_` equivalent
-of `g^` but it's not very useful and I don't have the key on my keyboard.
+  the same thing but on the screen line. `g<END>` acts like the `g_` equivalent
+  of `g^` but it's not very useful and I don't have the key on my keyboard.
 
 The main meat of horizontal movement is in find operators. These take you to
 instances of characters, relative to the cursor, in the current line:
@@ -126,4 +125,37 @@ by whitespace).
 `|=======================|`
  `1.1c  In-File Searching`                                *user.in_file_searching*
 
-The final form of navigation in files is searching. 
+The final form of navigation in files is searching. This involves finding or
+jumping to the positions of known or semi-known landmarks (e.g. a function
+name, a print statement you think exists).
+
+Searching is largely done with the `/` and `?` characters, searching forwards and
+backwards respectively.
+- `/{pattern}<CR>` (and the equivalent for `?`) searches
+  forward to the [count]th occurrence of {pattern}. This kind of search ignores
+  case unless {pattern} contains upper case characters.
+- `/{pattern}/{offset}<CR>` (and the equivalent for `?`) searches backward to
+  the [count]th occurrence on {pattern} with an offset of {offset}.
+- `n` repeats the last usage of `/` or `?` [count] times.
+- `N` repeats the last usage of `/` or `?` [count] times in the opposite direction.
+- `/<CR>` and `?<CR>` search forward and backward using the last used pattern and offset.
+- `//{offset}<CR>` and `??{offset}<CR>` search forward and backward using the
+  last used pattern and a new {offset}.
+- `*` and `#` search forward and backward to the [count]th occurrence of the
+  word nearest to the cursor. These ignore case when searching and search for
+  whole words and not substrings.
+- `g*` and `g#` act similarly to their non-prefixed counterparts but accept
+  substrings.
+
+Offsets modify the final cursor position relative to the match, the following
+are valid:
+- [num] or +[num] offset [num] lines downward, in column 1.
+- -[num] offsets [num] lines upward, in column 1.
+- e[+num] and e[-num] offset [num] characters to the right and left of the end
+  of the match.
+- s[+num] and s[-num] offset [num] characters to the right and left of the
+  start of the match.
+  - b[+num] and b[-num] are equivalent.
+- ;/{pattern} and ;?{pattern} perform another search.
+  
+Patterns are much more complex.

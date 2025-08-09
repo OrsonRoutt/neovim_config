@@ -1,9 +1,6 @@
-require("nvchad.mappings")
-
 local map = vim.keymap.set
-local unmap = vim.keymap.del
 
--- Disable arrow keys in normal.
+-- Disable arrows in nornal.
 map("n", "<left>", "<Nop>", { silent = true, noremap = true })
 map("n", "<right>", "<Nop>", { silent = true, noremap = true })
 map("n", "<up>", "<Nop>", { silent = true, noremap = true })
@@ -20,17 +17,84 @@ map("n", "<leader>M", function()
     vim.opt.mouse = ""
     vim.opt.mousescroll= "ver:0,hor:0"
   end
-end, { noremap = true, desc = "toggle mouse enabled" })
-vim.opt.mouse = ""
-vim.opt.mousescroll = "ver:0,hor:0"
+end, { desc = "toggle mouse enabled" })
 
--- Telescope actions.
+-- Window navigation.
+map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
+map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
+map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
+map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
+
+-- Clear highlights.
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
+
+-- Toggle line number/relative number.
+map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
+map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
+map("n", "<leader>N", "<cmd>set nu!<BAR>set rnu!<CR>", { desc = "toggle line and relative number" })
+
+-- Toggle comment.
+map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+
+-- Buffer mappings.
+map("n", "<leader>x", "<cmd>bd<CR>", { desc = "buffer delete" })
+map("n", "<leader>X", "<cmd>bd!<CR>", { desc = "buffer delete without saving" })
+map("n", "<leader>bx", function() require("scripts.bclose").delete(false) end, { desc = "buffer delete all" })
+map("n", "<leader>bX", function() require("scripts.bclose").delete(true) end, { desc = "buffer delete all without saving" })
+map("n", "<leader>bi", function() require("scripts.bclose").isolate(false) end, { desc = "buffer isolate current" })
+map("n", "<leader>bI", function() require("scripts.bclose").isolate(true) end, { desc = "buffer isolate current without saving" })
+map("n", "<leader>bc", function() require("scripts.bclose").cleanup() end, { desc = "buffer cleanup" })
+map("n", "<leader>bt", function() require("scripts.bclose").cleanup_term() end, { desc = "terminal cleanup" })
+map("n", "<leader>bT", function() require("scripts.bclose").delete_term() end, { desc = "terminal delete all" })
+map("n", "<leader>j", "<cmd>bn<CR>", { desc = "buffer next" })
+map("n", "<leader>k", "<cmd>bp<CR>", { desc = "buffer previous" })
+
+-- Quickfix mappings.
+map("n", "<M-j>", "<cmd>:cn<CR>", { desc = "quickfix goto next" })
+map("n", "<M-k>", "<cmd>:cp<CR>", { desc = "quickfix goto prev" })
+map("n", "<M-J>", "<cmd>:clas<CR>", { desc = "quickfix goto last" })
+map("n", "<M-K>", "<cmd>:cfir<CR>", { desc = "quickfix goto first" })
+map("n", "<M-o>", "<cmd>:cope<CR>", { desc = "quickfix open" })
+map("n", "<M-q>", "<cmd>:ccl<CR>", { desc = "quickfix close" })
+
+-- Loclist mappings.
+map("n", "<leader><M-j>", "<cmd>:lnext<CR>", { desc = "loclist goto next" })
+map("n", "<leader><M-k>", "<cmd>:lprev<CR>", { desc = "loclist goto prev" })
+map("n", "<leader><M-J>", "<cmd>:llast<CR>", { desc = "loclist goto last" })
+map("n", "<leader><M-K>", "<cmd>:lfirst<CR>", { desc = "loclist goto first" })
+map("n", "<leader><M-o>", "<cmd>:lopen<CR>", { desc = "loclist open" })
+map("n", "<leader><M-q>", "<cmd>:lclose<CR>", { desc = "loclist close" })
+
+-- Open error float.
+map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true }) end, { desc = "error open float" })
+
+-- Global LSP mappings.
+map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
+
+-- Terminal mappings.
+map("t", "<ESC><ESC>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+map("t", "<C-x>", "<cmd>bd!<CR>", { desc = "terminal delete" })
+
+-- Telescope mappings.
+map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
+map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
 map("n", "<leader>fr", "<cmd>Telescope lsp_references<CR>", { desc = "telescope find references" })
 map("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "telescope find symbols in buffer" })
 map("n", "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "telescope find symbols in workspace" })
 map("n", "<leader>fd", "<cmd>Telescope lsp_definitions<CR>", { desc = "telescope find definitions" })
 map("n", "<leader>ft", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "telescope find type definitions" })
 map("n", "<leader>fg", "<cmd>Telescope grapple tags<CR>", { desc = "telescope find grapple tags" })
+map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
+map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
+
+--map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+--map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 
 -- Grapple actions.
 map("n", "<leader>gt", "<cmd>Grapple toggle<CR>", { desc = "grapple toggle tag" })
@@ -49,82 +113,33 @@ map("n", "<leader>g9", "<cmd>Grapple select index=9<CR>", { desc = "grapple sele
 map("n", "<leader>gS", "<cmd>Grapple toggle_scopes<CR>", { desc = "grapple toggle scopes window" })
 map("n", "<leader>gL", "<cmd>Grapple toggle_loaded<CR>", { desc = "grapple toggle loaded scopes window" })
 
--- Tabufline actions.
-map("n", "<leader>X", function() require("nvchad.tabufline").closeAllBufs() end, { desc = "buffer close all" })
-map("n", "<leader>I", function() require("nvchad.tabufline").closeAllBufs(false) end, { desc = "buffer isolate current" })
-for i = 1, 9, 1 do
-  map("n", string.format("<A-%s>", i), function()
-    local b = vim.t.bufs[i]
-    if b then vim.api.nvim_set_current_buf(b) end
-  end, { desc = string.format("buffer goto %s", i) })
-end
-map("n", "<A-0>", function()
-  local b = vim.t.bufs[10]
-  if b then vim.api.nvim_set_current_buf(b) end
-end, { desc = "buffer goto 10" })
-map("n", "<leader>k", function() require("nvchad.tabufline").move_buf(-1) end, { desc = "move buffer left" })
-map("n", "<leader>j", function() require("nvchad.tabufline").move_buf(1) end, { desc = "move buffer right" })
+-- Whitespace mappings.
+map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc = "trim whitespace" })
 
--- nvim-tree focus rebind.
-map("n", "<leader><tab>", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
-unmap("n", "<leader>e")
-
--- Expand error into a float.
-map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true }) end, { desc = "error open float" })
-
--- Undotree toggle.
-map("n", "<leader>u", function() vim.cmd.UndotreeToggle() end, { desc = "undotree toggle" })
-
--- Unbind conform.
-unmap("n", "<leader>fm")
-
--- Trouble actions.
-map("n", "<leader>ee", "<cmd>Trouble diagnostics toggle<CR>", { desc = "trouble toggle diagnostics" })
-map("n", "<leader>eE", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "trouble toggle buffer diagnostics" })
-map("n", "<leader>el", "<cmd>Trouble lsp toggle focus=false<CR>", { desc = "trouble toggle lsp" })
-map("n", "<leader>ef", "<cmd>Trouble diagnostics open focus=true<CR>", { desc = "trouble focus diagnostics" })
-map("n", "<leader>eF", "<cmd>Trouble lsp open focus=true<CR>", { desc = "trouble focus lsp" })
-
--- Easier cd to current file.
-map("n", "<leader>cd", "<cmd>:cd %:h<CR>", { desc = "cd to open file directory" })
-
--- Quickfix actions.
-map("n", "<M-j>", "<cmd>:cn<CR>", { desc = "quickfix goto next" })
-map("n", "<M-k>", "<cmd>:cp<CR>", { desc = "quickfix goto prev" })
-map("n", "<M-J>", "<cmd>:clas<CR>", { desc = "quickfix goto last" })
-map("n", "<M-K>", "<cmd>:cfir<CR>", { desc = "quickfix goto first" })
-map("n", "<M-o>", "<cmd>:cope<CR>", { desc = "quickfix open" })
-map("n", "<M-q>", "<cmd>:ccl<CR>", { desc = "quickfix close" })
-
--- Loclist actions.
-map("n", "<leader><M-j>", "<cmd>:lnext<CR>", { desc = "loclist goto next" })
-map("n", "<leader><M-k>", "<cmd>:lprev<CR>", { desc = "loclist goto prev" })
-map("n", "<leader><M-J>", "<cmd>:llast<CR>", { desc = "loclist goto last" })
-map("n", "<leader><M-K>", "<cmd>:lfirst<CR>", { desc = "loclist goto first" })
-map("n", "<leader><M-o>", "<cmd>:lopen<CR>", { desc = "loclist open" })
-map("n", "<leader><M-q>", "<cmd>:lclose<CR>", { desc = "loclist close" })
-
--- Base46 theme toggle.
+-- Base46 mappings.
 map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
 map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
 
--- Terminal remapping.
-unmap("t", "<C-x>")
-map("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "terminal escape terminal mode" })
-unmap("n", "<leader>v")
-unmap({"n", "t"}, "<A-v>")
+-- Yazi mappings.
+map("n", "<C-y>", "<cmd>Yazi<CR>", { desc = "open yazi at current file"})
+map("n", "<leader><C-Y>", "<cmd>Yazi toggle<CR>", { desc = "toggle yazi" })
+map("n", "<leader>c<C-Y>", "<cmd>Yazi cwd<CR>", { desc = "open yazi at current working directory" })
 
--- Terminal runners.
-map({"n", "t"}, "<C-g>", function()
-  require("nvchad.term").toggle{ pos = "float", id = "lazygit", cmd = "lazygit;exit" }
+-- NVUI terminal mappings.
+map("n", "<leader>h", function() require("nvchad.term").new { pos = "sp" }
+end, { desc = "terminal new horizontal term" })
+map("n", "<leader>v", function() require("nvchad.term").new { pos = "vsp" }
+end, { desc = "terminal new vertical term" })
+map({ "n", "t" }, "<A-h>", function() require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "terminal toggleable horizontal term" })
+map({ "n", "t" }, "<A-v>", function() require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "terminal toggleable vertical term" })
+map({ "n", "t" }, "<A-i>", function() require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "terminal toggle floating term" })
+
+-- NVUI terminal runners.
+map({"n", "t"}, "<C-g>", function() require("nvchad.term").toggle{ pos = "float", id = "lazygit", cmd = "lazygit;exit" }
 end, { desc = "git toggle lazygit terminal" })
-
-map({"n", "t"}, "<C-y>", function()
-  require("nvchad.term").toggle{ pos = "float", id = "yazi", cmd = "yazi;exit" }
-end, { desc = "toggle yazi terminal" })
-
--- Whitespace actions.
-map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc = "trim whitespace" })
 
 -- Load user commands.
 require("user.commands")

@@ -2,12 +2,12 @@
 local M = {}
 
 M.base46 = {
-	theme = "flexoki",
-	hl_override = {
-		Comment = { italic = true },
-		["@comment"] = { italic = true },
-	},
+  theme = "flexoki",
   theme_toggle = { "horizon", "flexoki" },
+  hl_override = {
+    Comment = { italic = true },
+    ["@comment"] = { italic = true },
+  },
 }
 
 M.ui = {
@@ -20,7 +20,7 @@ M.ui = {
     },
   },
   tabufline = {
-    order = { "treeOffset", "buffers", "tabs" },
+    enabled = false,
   },
 }
 
