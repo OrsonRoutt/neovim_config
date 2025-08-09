@@ -19,10 +19,14 @@ local function on_init(client, _)
   if client.supports_method "textDocument/semanticTokens" then
     client.server_capabilities.semanticTokensProvider = false
     client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.inlineCompletionProvider = false
   end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem = {
+  snippetSupport = false,
+}
 
 -- Default configured servers.
 for _, lsp in ipairs({"gdscript", "sqls", "phpactor"}) do
