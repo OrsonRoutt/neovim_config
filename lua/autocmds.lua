@@ -14,7 +14,7 @@ autocmd("FileType", {
 
 -- Setup spell check filetypes.
 autocmd("FileType", {
-  pattern = { "markdown" },
+  pattern = { "markdown", "typst" },
   callback = function()
     vim.opt_local.spell = true
   end,

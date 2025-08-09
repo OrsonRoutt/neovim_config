@@ -44,6 +44,18 @@ lspconfig.clangd.setup {
   },
 }
 
+-- tinymist
+lspconfig.tinymist.setup {
+  on_attach = function(_, bufnr)
+    on_attach(nil, bufnr)
+    map("n", "<leader>tp", "<cmd>:TypstPreview<CR>", { buffer = bufnr, desc = "typst present" })
+    map("n", "<leader>tc", "<cmd>:TypstPreviewStop<CR>", { buffer = bufnr, desc = "typst stop present"})
+    map("n", "<leader>te", "<cmd>!typst c %:.<CR>", { buffer = bufnr, desc = "typst export to pdf" })
+  end,
+  on_init = on_init,
+  capabilities = capabilities,
+}
+
 -- lua_ls
 lspconfig.lua_ls.setup {
   on_attach = on_attach,

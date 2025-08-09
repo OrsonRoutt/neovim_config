@@ -10,7 +10,8 @@ return {
     "godot_resource", "gdshader",
     "cpp", "c", "markdown",
     "markdown_inline", "luadoc",
-    "printf", "sql", "php"
+    "printf", "sql", "php",
+    "typst",
   },
   highlight = {
     enable = true,

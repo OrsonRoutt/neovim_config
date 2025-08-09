@@ -1,6 +1,6 @@
 local M = {}
 
-local get_buf_opt = vim.api.nvim_buf_get_option
+local get_buf_opt = vim.api.nvim_get_option_value
 
 local bl_filetypes = { "lazy", "NvimTree" }
 local bl_buftypes = { "terminal", "quickfix", "prompt" }
@@ -8,14 +8,14 @@ local bl_buftypes = { "terminal", "quickfix", "prompt" }
 local function filter_bl(bufs)
   return vim.tbl_filter(function(buf)
     local bufnr = buf.bufnr
-    return not vim.tbl_contains(bl_filetypes, get_buf_opt(bufnr, "filetype"))
-      and not vim.tbl_contains(bl_buftypes, get_buf_opt(bufnr, "buftype"))
+    return not vim.tbl_contains(bl_filetypes, get_buf_opt("filetype", { buf = bufnr }))
+      and not vim.tbl_contains(bl_buftypes, get_buf_opt("buftype", { buf = bufnr }))
   end, bufs)
 end
 
 local function filter_unsaved(bufs)
   return vim.tbl_filter(function(buf)
-    return not get_buf_opt(buf.bufnr, "modified")
+    return not get_buf_opt("modified", { buf = buf.bufnr })
   end, bufs)
 end
 
@@ -27,7 +27,7 @@ end
 
 local function filter_terminal(bufs)
   return vim.tbl_filter(function(buf)
-    return get_buf_opt(buf.bufnr, "buftype") == "terminal"
+    return get_buf_opt("buftype", { buf = buf.bufnr }) == "terminal"
   end, bufs)
 end
 

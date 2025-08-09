@@ -118,4 +118,9 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     cmd = "Grapple",
   },
+  {
+    "chomosuke/typst-preview.nvim",
+    opts = require("configs.typst-preview"),
+    cmd = {"TypstPreviewUpdate", "TypstPreview", "TypstPreviewStop", "TypstPreviewToggle"},
+  }
 }
