@@ -47,8 +47,15 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    lazy = false,
+    dependencies = {
+      { "ms-jpq/coq_nvim", branch = "coq" },
+      { "ms-jpq/coq.thirdparty", branch = "3p" },
+    },
     config = function() require("configs.lspconfig") end,
+    init = function()
+      vim.g.coq_settings = require("configs.coq")
+    end,
   },
   {
     "johnfrankmorgan/whitespace.nvim",
@@ -62,31 +69,6 @@ return {
     build = ":TSUpdate",
     opts = function() return require("configs.treesitter") end,
     config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      {
-        "windwp/nvim-autopairs",
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { "TelescopePrompt", "vim" },
-        },
-        config = function(_, opts)
-          require("nvim-autopairs").setup(opts)
-          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-          require("cmp.init").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        end,
-      },
-      {
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "https://codeberg.org/FelipeLema/cmp-async-path.git"
-      }
-    },
-    opts = function() return require("configs.cmp") end,
   },
   {
     "mikavilpas/yazi.nvim",

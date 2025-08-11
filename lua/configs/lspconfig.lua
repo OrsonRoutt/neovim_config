@@ -45,6 +45,7 @@ lspconfig.clangd.setup {
   cmd = {
     "clangd",
     "--query-driver=/usr/local/bin/g++-14",
+    "-header-insertion=never",
   },
 }
 
