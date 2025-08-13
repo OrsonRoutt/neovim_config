@@ -2,8 +2,6 @@ local M = {}
 
 local terms = {}
 
-dofile(vim.g.base46_cache .. "term")
-
 local function create_float(buf, opts)
   local win_opts = {
     relative = "editor",
@@ -37,6 +35,7 @@ M.tggl_float_job = function(opts)
       buffer = buf,
       callback = function() vim.cmd("bd!") end,
     })
+    vim.cmd("setlocal winhl=NormalFloat:Normal,FloatBorder:Normal")
   end
 end
 

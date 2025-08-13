@@ -141,10 +141,9 @@ end, { desc = "terminal toggleable vertical term" })
 map({ "n", "t" }, "<A-i>", function() require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
 
--- NVUI terminal runners.
-local term = require("scripts.term")
+-- Terminal job mappings.
 map("n", "<C-g>", function()
-  term.tggl_float_job({
+  require("scripts.term").tggl_float_job({
     id = 0,
     row = 0.05,
     col = 0.05,
