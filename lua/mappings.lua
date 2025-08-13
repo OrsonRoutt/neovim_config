@@ -142,7 +142,18 @@ map({ "n", "t" }, "<A-i>", function() require("nvchad.term").toggle { pos = "flo
 end, { desc = "terminal toggle floating term" })
 
 -- NVUI terminal runners.
-map({"n", "t"}, "<C-g>", function() require("nvchad.term").toggle{ pos = "float", id = "lazygit", cmd = "lazygit;exit" }
+local term = require("scripts.term")
+map("n", "<C-g>", function()
+  term.tggl_float_job({
+    id = 0,
+    row = 0.05,
+    col = 0.05,
+    width = 0.9,
+    height = 0.8,
+    job = "lazygit",
+    exit = "q",
+    toggle = "<C-g>",
+  })
 end, { desc = "git toggle lazygit terminal" })
 
 -- Load user commands.
