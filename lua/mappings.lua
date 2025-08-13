@@ -6,6 +6,10 @@ map("n", "<right>", "<Nop>", { silent = true, noremap = true })
 map("n", "<up>", "<Nop>", { silent = true, noremap = true })
 map("n", "<down>", "<Nop>", { silent = true, noremap = true })
 
+-- Force remap arrows in insert for 'coq_nvim'.
+vim.api.nvim_set_keymap("i", "<up>", 'pumvisible() ? "<C-e><up>" : "<up>"', { expr = true, noremap = true })
+vim.api.nvim_set_keymap("i", "<down>", 'pumvisible() ? "<C-e><down>" : "<down>"', { expr = true, noremap = true })
+
 -- Toggle mouse.
 map("n", "<leader>M", function()
   if (vim.api.nvim_get_option_value("mouse", {}) ~= "a") then
