@@ -13,4 +13,7 @@ return {
     bigger_preview = "None",
     jump_to_mark = "None",
   },
+  completion = {
+    skip_after = {"	"," ","\n"}
+  },
 }
