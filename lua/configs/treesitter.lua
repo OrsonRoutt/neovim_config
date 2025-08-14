@@ -43,11 +43,11 @@ return {
       },
       goto_previous_start = {
         ["[m"] = { query = "@function.outer", desc = "Previous function start" },
-        ["[]"] = { query = "@class.outer", desc = "Previous class start" },
+        ["[["] = { query = "@class.outer", desc = "Previous class start" },
       },
       goto_previous_end = {
         ["[M"] = { query = "@function.outer", desc = "Previous function end" },
-        ["[["] = { query = "@class.outer", desc = "Previous class end" },
+        ["[]"] = { query = "@class.outer", desc = "Previous class end" },
       },
     },
   },
