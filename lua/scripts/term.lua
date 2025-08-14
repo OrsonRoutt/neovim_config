@@ -33,7 +33,7 @@ M.tggl_float_job = function(opts)
     vim.keymap.set("t", opts.toggle, function() M.tggl_float_job(opts) end, { buffer = buf })
     vim.api.nvim_create_autocmd("TermClose", {
       buffer = buf,
-      callback = function() vim.cmd("bd!") end,
+      callback = function() vim.api.nvim_buf_delete(buf, { force = true }) end,
     })
     vim.cmd("setlocal winhl=NormalFloat:Normal,FloatBorder:Normal")
   end

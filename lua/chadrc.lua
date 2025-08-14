@@ -2,13 +2,13 @@
 local M = {}
 
 M.base46 = {
-  theme = "flexoki",
+  theme = "horizon",
   theme_toggle = { "horizon", "flexoki" },
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
   },
-  transparency = false,
+  transparency = true,
 }
 
 M.ui = {

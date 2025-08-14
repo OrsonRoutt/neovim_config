@@ -95,8 +95,6 @@ map("n", "<leader>fg", "<cmd>Telescope grapple tags<CR>", { desc = "telescope fi
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
 
---map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
---map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 
@@ -123,6 +121,11 @@ map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc 
 -- Base46 mappings.
 map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
 map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
+
+-- Gitsigns mappings.
+map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "git line blame" })
+map("n", "<leader>gc", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "git toggle current line blame" })
+map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git blame buffer" })
 
 -- Yazi mappings.
 map("n", "<C-y>", "<cmd>Yazi<CR>", { desc = "open yazi at current file"})

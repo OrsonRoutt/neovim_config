@@ -104,5 +104,11 @@ return {
     "chomosuke/typst-preview.nvim",
     opts = require("configs.typst-preview"),
     cmd = {"TypstPreviewUpdate", "TypstPreview", "TypstPreviewStop", "TypstPreviewToggle"},
-  }
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "User FilePost",
+    cmd = "Gitsigns",
+    opts = function() return require("configs.gitsigns") end,
+  },
 }
