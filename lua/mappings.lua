@@ -6,7 +6,14 @@ map("n", "<right>", "<Nop>", { silent = true, noremap = true })
 map("n", "<up>", "<Nop>", { silent = true, noremap = true })
 map("n", "<down>", "<Nop>", { silent = true, noremap = true })
 
--- Force remap arrows in insert for 'coq_nvim'.
+-- Coq mappings.
+vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
+vim.api.nvim_set_keymap("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true, silent = true })
+vim.api.nvim_set_keymap("i", "<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<BS>"]], { expr = true, silent = true })
+map("i", "<CR>", _G.user.CR, { silent = true })
+map("i", "<BS>", _G.user.BS, { silent = true })
+
+-- Coq unmap arrows.
 vim.api.nvim_set_keymap("i", "<up>", 'pumvisible() ? "<C-e><up>" : "<up>"', { expr = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<down>", 'pumvisible() ? "<C-e><down>" : "<down>"', { expr = true, noremap = true })
 

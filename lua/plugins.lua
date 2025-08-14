@@ -48,13 +48,20 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    dependencies = {
-      { "ms-jpq/coq_nvim", branch = "coq" },
-      { "ms-jpq/coq.thirdparty", branch = "3p" },
-    },
+    dependencies = { "ms-jpq/coq_nvim" },
     config = function() require("configs.lspconfig") end,
-    init = function()
-      vim.g.coq_settings = require("configs.coq")
+  },
+  {
+    "ms-jpq/coq_nvim",
+    branch = "coq",
+    dependencies = { "ms-jpq/coq.thirdparty", "windwp/nvim-autopairs" },
+    init = function() vim.g.coq_settings = require("configs.coq") end,
+  },
+  {
+    "windwp/nvim-autopairs",
+    opts = function() require("configs.autopairs") end,
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
     end,
   },
   {
@@ -64,6 +71,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",

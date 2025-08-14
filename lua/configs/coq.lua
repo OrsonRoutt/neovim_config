@@ -9,6 +9,7 @@ return {
     },
   },
   keymap = {
+    recommended = false,
     bigger_preview = "None",
     jump_to_mark = "None",
   },
