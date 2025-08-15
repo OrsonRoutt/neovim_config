@@ -15,6 +15,76 @@ local function create_float(buf, opts)
   vim.api.nvim_open_win(buf, true, win_opts)
 end
 
+local function create_hsplit(buf, opts)
+  local win_opts = {
+    win = vim.api.nvim_get_current_win(),
+    split = "below",
+    height = math.ceil(opts.height * vim.o.lines),
+  }
+  vim.api.nvim_open_win(buf, true, win_opts)
+end
+
+M.new_hsplit = function(opts)
+  local buf = vim.api.nvim_create_buf(false, true)
+  create_hsplit(buf, opts)
+  vim.cmd("startinsert")
+  vim.fn.jobstart(vim.o.shell, { term = true })
+  vim.api.nvim_create_autocmd("TermClose", {
+      buffer = buf,
+      callback = function() vim.api.nvim_buf_delete(buf, { force = true }) end,
+    })
+    vim.cmd("setlocal winhl=NormalFloat:Normal,FloatBorder:Normal")
+end
+
+M.tggl_hsplit = function(opts)
+  local buf = terms[opts.id]
+  if buf == nil or not vim.api.nvim_buf_is_valid(buf) then
+    buf = vim.api.nvim_create_buf(false, true)
+    terms[opts.id] = buf
+  end
+  local win = vim.fn.bufwinid(buf)
+  if win == -1 then
+    create_hsplit(buf, opts)
+    vim.cmd("startinsert")
+  else
+    vim.api.nvim_win_close(win, true)
+  end
+  if vim.bo[buf].buftype ~= "terminal" then
+    vim.fn.jobstart(vim.o.shell, { term = true })
+    vim.keymap.set("t", opts.toggle, function() M.tggl_hsplit(opts) end, { buffer = buf })
+    vim.api.nvim_create_autocmd("TermClose", {
+      buffer = buf,
+      callback = function() vim.api.nvim_buf_delete(buf, { force = true }) end,
+    })
+    vim.cmd("setlocal winhl=NormalFloat:Normal,FloatBorder:Normal")
+  end
+
+end
+
+M.tggl_float = function(opts)
+  local buf = terms[opts.id]
+  if buf == nil or not vim.api.nvim_buf_is_valid(buf) then
+    buf = vim.api.nvim_create_buf(false, true)
+    terms[opts.id] = buf
+  end
+  local win = vim.fn.bufwinid(buf)
+  if win == -1 then
+    create_float(buf, opts)
+    vim.cmd("startinsert")
+  else
+    vim.api.nvim_win_close(win, true)
+  end
+  if vim.bo[buf].buftype ~= "terminal" then
+    vim.fn.jobstart(vim.o.shell, { term = true })
+    vim.keymap.set("t", opts.toggle, function() M.tggl_float(opts) end, { buffer = buf })
+    vim.api.nvim_create_autocmd("TermClose", {
+      buffer = buf,
+      callback = function() vim.api.nvim_buf_delete(buf, { force = true }) end,
+    })
+    vim.cmd("setlocal winhl=NormalFloat:Normal,FloatBorder:Normal")
+  end
+end
+
 M.tggl_float_job = function(opts)
   local buf = terms[opts.id]
   if buf == nil or not vim.api.nvim_buf_is_valid(buf) then

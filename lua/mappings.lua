@@ -139,28 +139,23 @@ map("n", "<C-y>", "<cmd>Yazi<CR>", { desc = "open yazi at current file"})
 map("n", "<leader><C-Y>", "<cmd>Yazi toggle<CR>", { desc = "toggle yazi" })
 map("n", "<leader>c<C-Y>", "<cmd>Yazi cwd<CR>", { desc = "open yazi at current working directory" })
 
--- NVUI terminal mappings.
-map("n", "<leader>h", function() require("nvchad.term").new { pos = "sp" }
+-- Terminal mappings.
+map("n", "<leader>h", function() require("scripts.term").new_hsplit({ height = 0.3 })
 end, { desc = "terminal new horizontal term" })
-map("n", "<leader>v", function() require("nvchad.term").new { pos = "vsp" }
-end, { desc = "terminal new vertical term" })
-map({ "n", "t" }, "<A-h>", function() require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-end, { desc = "terminal toggleable horizontal term" })
-map({ "n", "t" }, "<A-v>", function() require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-end, { desc = "terminal toggleable vertical term" })
-map({ "n", "t" }, "<A-i>", function() require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+map("n", "<A-h>", function() require("scripts.term").tggl_hsplit({ id = 1, toggle = "<A-h>", height = 0.3 })
+end, { desc = "terminal toggle horizontal term" })
+map("n", "<A-i>", function() require("scripts.term").tggl_float({ id = 2, row = 0.05, col = 0.05, width = 0.9, height = 0.8, toggle = "<A-i>" })
 end, { desc = "terminal toggle floating term" })
 
 -- Terminal job mappings.
 map("n", "<C-g>", function()
   require("scripts.term").tggl_float_job({
-    id = 0,
+    id = 1,
     row = 0.05,
     col = 0.05,
     width = 0.9,
     height = 0.8,
     job = "lazygit",
-    exit = "q",
     toggle = "<C-g>",
   })
 end, { desc = "git toggle lazygit terminal" })

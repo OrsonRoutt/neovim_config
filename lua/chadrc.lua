@@ -8,7 +8,7 @@ M.base46 = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
   },
-  transparency = true,
+  transparency = false,
 }
 
 M.ui = {
@@ -34,15 +34,6 @@ M.ui = {
   },
   tabufline = {
     enabled = false,
-  },
-}
-
-M.term = {
-  float = {
-    row = 0.05,
-    col = 0.05,
-    width = 0.9,
-    height = 0.8,
   },
 }
 
