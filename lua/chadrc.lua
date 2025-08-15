@@ -8,7 +8,7 @@ M.base46 = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
   },
-  transparency = false,
+  transparency = true,
 }
 
 M.ui = {

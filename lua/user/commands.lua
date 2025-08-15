@@ -1,10 +1,11 @@
 local user_command = vim.api.nvim_create_user_command
 
--- NeoVilm folders.
+-- Technical folders.
 user_command("Cfg", ":cd " .. vim.fn.stdpath("config") .. "<BAR>:e init.lua", {})
 user_command("Data", ":cd " .. vim.fn.stdpath("data"), {})
 user_command("Wez", ":cd ~<BAR>:e .wezterm.lua", {})
--- Computer-specific folders.
+user_command("Fish", ":cd ~/.config/fish<BAR>:e config.fish", {})
+-- User folders.
 user_command("Gitdir", ":cd ~/Documents/GitHub/", {})
 user_command("Cpp", ":cd ~/Documents/GitHub/cpp_projects/", {})
 user_command("CppGame", ":cd ~/Documents/GitHub/cpp_projects/physics_test/<BAR>:e src/main.cpp", {})
