@@ -84,7 +84,6 @@ map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true })
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
 -- Terminal mappings.
-map("t", "<ESC><ESC>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 map("t", "<C-x>", "<cmd>bd!<CR>", { desc = "terminal delete" })
 
 -- Telescope mappings.

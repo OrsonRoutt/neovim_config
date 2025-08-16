@@ -71,9 +71,8 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function() return require("configs.treesitter") end,
     config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
@@ -118,5 +117,10 @@ return {
     event = "User FilePost",
     cmd = "Gitsigns",
     opts = function() return require("configs.gitsigns") end,
+  },
+  {
+    "max397574/better-escape.nvim",
+    lazy = false,
+    opts = require("configs.better_escape"),
   },
 }
