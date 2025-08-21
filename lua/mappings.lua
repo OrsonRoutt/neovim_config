@@ -10,12 +10,10 @@ map("n", "<down>", "<Nop>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<BS>"]], { expr = true, silent = true })
-map("i", "<CR>", _G.user.CR, { silent = true })
-map("i", "<BS>", _G.user.BS, { silent = true })
-
--- Coq unmap arrows.
 vim.api.nvim_set_keymap("i", "<up>", [[pumvisible() ? "<C-e><up>" : "<up>"]], { expr = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<down>", [[pumvisible() ? "<C-e><down>" : "<down>"]], { expr = true, noremap = true })
+map("i", "<CR>", _G.user.CR, { silent = true })
+map("i", "<BS>", _G.user.BS, { silent = true })
 
 -- Toggle mouse.
 map("n", "<leader>M", function()
@@ -37,7 +35,7 @@ map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 -- Clear highlights.
-map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "clear highlights" })
 
 -- Toggle line number/relative number.
 map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
@@ -58,33 +56,39 @@ map("n", "<leader>bI", function() require("scripts.bclose").isolate(true) end, {
 map("n", "<leader>bc", function() require("scripts.bclose").cleanup() end, { desc = "buffer cleanup" })
 map("n", "<leader>bt", function() require("scripts.bclose").cleanup_term() end, { desc = "terminal cleanup" })
 map("n", "<leader>bT", function() require("scripts.bclose").delete_term() end, { desc = "terminal delete all" })
+map("t", "<C-x>", "<cmd>bd!<CR>", { desc = "terminal delete" })
 map("n", "<leader>j", "<cmd>bn<CR>", { desc = "buffer next" })
 map("n", "<leader>k", "<cmd>bp<CR>", { desc = "buffer previous" })
 
--- Quickfix mappings.
-map("n", "<M-j>", "<cmd>:cn<CR>", { desc = "quickfix goto next" })
-map("n", "<M-k>", "<cmd>:cp<CR>", { desc = "quickfix goto prev" })
-map("n", "<M-J>", "<cmd>:clas<CR>", { desc = "quickfix goto last" })
-map("n", "<M-K>", "<cmd>:cfir<CR>", { desc = "quickfix goto first" })
-map("n", "<M-o>", "<cmd>:cope<CR>", { desc = "quickfix open" })
-map("n", "<M-q>", "<cmd>:ccl<CR>", { desc = "quickfix close" })
-
--- Loclist mappings.
-map("n", "<leader><M-j>", "<cmd>:lnext<CR>", { desc = "loclist goto next" })
-map("n", "<leader><M-k>", "<cmd>:lprev<CR>", { desc = "loclist goto prev" })
-map("n", "<leader><M-J>", "<cmd>:llast<CR>", { desc = "loclist goto last" })
-map("n", "<leader><M-K>", "<cmd>:lfirst<CR>", { desc = "loclist goto first" })
-map("n", "<leader><M-o>", "<cmd>:lopen<CR>", { desc = "loclist open" })
-map("n", "<leader><M-q>", "<cmd>:lclose<CR>", { desc = "loclist close" })
+-- Quickfix/loclist mappings.
+map("n", "<M-j>", function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd("lne")
+  else vim.cmd("cn") end
+end, { desc = "quickfix/loclist goto next" })
+map("n", "<M-k>", function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd("lp")
+  else vim.cmd("cp") end
+end, { desc = "quickfix/loclist goto prev" })
+map("n", "<M-J>", function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd("lla")
+  else vim.cmd("cla") end
+end, { desc = "quickfix/loclist goto last" })
+map("n", "<M-K>", function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd("lfir")
+  else vim.cmd("cfir") end
+end, { desc = "quickfix/loclist goto first" })
+map("n", "<M-q>", function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd("lcl")
+  else vim.cmd("ccl") end
+end, { desc = "quickfix/loclist close" })
+map("n", "<M-o>", "<cmd>cope<CR>", { desc = "quickfix open" })
+map("n", "<M-O>", "<cmd>lop<CR>", { desc = "loclist open" })
 
 -- Open error float.
 map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true }) end, { desc = "error open float" })
 
 -- Global LSP mappings.
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
-
--- Terminal mappings.
-map("t", "<C-x>", "<cmd>bd!<CR>", { desc = "terminal delete" })
 
 -- Telescope mappings.
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
@@ -135,8 +139,7 @@ map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git blame buffer" })
 
 -- Yazi mappings.
 map("n", "<C-y>", "<cmd>Yazi<CR>", { desc = "open yazi at current file"})
-map("n", "<leader><C-Y>", "<cmd>Yazi toggle<CR>", { desc = "toggle yazi" })
-map("n", "<leader>c<C-Y>", "<cmd>Yazi cwd<CR>", { desc = "open yazi at current working directory" })
+map("n", "<leader>yc", "<cmd>Yazi cwd<CR>", { desc = "open yazi at current working directory" })
 
 -- Terminal mappings.
 map("n", "<leader>h", function() require("scripts.term").new_split({ split = "below", height = 0.3 })
