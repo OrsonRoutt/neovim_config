@@ -52,6 +52,15 @@ vim.cmd("set nocompatible")
 vim.cmd("filetype plugin on")
 vim.cmd("syntax on")
 
+-- Modified from https://www.reddit.com/r/neovim/comments/13u9brg/comment/jlziixr
+local fcs = vim.opt.fillchars:get()
+local function get_fold(lnum)
+	if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return ' ' end
+	return vim.fn.foldclosed(lnum) == -1 and fcs.foldopen or fcs.foldclose
+end
+_G.get_statuscol = function() return "%s" .. get_fold(vim.v.lnum) .. " %l " end
+vim.o.statuscolumn = "%!v:lua.get_statuscol()"
+
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
