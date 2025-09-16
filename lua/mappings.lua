@@ -90,6 +90,16 @@ map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true })
 -- Global LSP mappings.
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
+-- Ufo mappings.
+map("n", "zR", require("ufo").openAllFolds, { desc = "ufo open all folds" })
+map("n", "zM", require("ufo").closeAllFolds, { desc = "ufo close all folds" })
+map("n", "zr", require("ufo").openFoldsExceptKinds, { desc = "ufo fold less" })
+map("n", "zm", require("ufo").closeFoldsWith, { desc = "ufo fold more" })
+map("n", "K", function()
+    local winid = require("ufo").peekFoldedLinesUnderCursor()
+    if not winid then vim.lsp.buf.hover() end
+end, { desc = "lsp hover or ufo peek folded lines" })
+
 -- Telescope mappings.
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
@@ -107,6 +117,10 @@ map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hid
 
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+
+map("n", "<leader>wf", "<cmd>Telescope vw<CR>", { desc = "telescope find in vimwiki" })
+map("n", "<leader>wg", "<cmd>Telescope vw live_grep<CR>", { desc = "telescope live grep in vimwiki" })
+map("n", "<leader>wl", "<cmd>Telescope vw link<CR>", { desc = "telescope live grep in vimwiki link" })
 
 -- Grapple actions.
 map("n", "<leader>gt", "<cmd>Grapple toggle<CR>", { desc = "grapple toggle tag" })

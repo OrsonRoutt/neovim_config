@@ -14,7 +14,6 @@ return {
   {
     "folke/which-key.nvim",
     lazy = false,
-    keys = { "<leader>" },
     cmd = "WhichKey",
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
@@ -72,7 +71,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects", "kevinhwang91/nvim-ufo" },
     build = ":TSUpdate",
     opts = function() return require("configs.treesitter") end,
     config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
@@ -90,7 +89,11 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      "ElPiloto/telescope-vimwiki.nvim",
+      "vimwiki/vimwiki",
+    },
     cmd = "Telescope",
     opts = function()
       return require("configs.telescope")
@@ -123,4 +126,19 @@ return {
     lazy = false,
     opts = require("configs.better_escape"),
   },
+  {
+    "vimwiki/vimwiki",
+    event = "BufEnter *.wiki",
+    keys = {
+      { "<leader>ww", desc = "VimwikiIndex (Lazy)" },
+      { "<leader>wt", desc = "VimwikiTabIndex (Lazy)" },
+      { "<leader>ws", desc = "VimwikiUISelect (Lazy)" },
+    },
+    init = function() require("configs.vimwiki") end,
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { "kevinhwang91/promise-async" },
+    config = function() require("ufo").setup(require("configs.ufo_opts")) end,
+  }
 }

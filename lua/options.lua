@@ -11,6 +11,12 @@ o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
 
+o.foldcolumn = "1"
+o.foldlevel = 99
+o.foldlevelstart = 99
+o.foldenable = true
+o.fillchars = "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
+
 o.expandtab = true
 o.shiftwidth = 2
 o.smartindent = true
@@ -41,6 +47,10 @@ o.timeoutlen = 300
 o.undofile = true
 
 o.updatetime = 250
+
+vim.cmd("set nocompatible")
+vim.cmd("filetype plugin on")
+vim.cmd("syntax on")
 
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0

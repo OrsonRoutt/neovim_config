@@ -12,3 +12,4 @@ user_command("CppGame", ":cd ~/Documents/GitHub/cpp_projects/physics_test/<BAR>:
 user_command("Capstone", ":cd ~/Documents/GitHub/Capstone_Dungeon_Chef/<BAR>:e dungeon-chef/character-actors/actor_character.gd", {})
 user_command("Notes", ":cd ~/Documents/Obsidian/main<BAR>:e Todo.md", {})
 user_command("Typst", ":cd ~/Documents/typst<BAR>:enew", {})
+user_command("GitSfs", ":cd ~/Documents/GitHub/git-sfs", {})

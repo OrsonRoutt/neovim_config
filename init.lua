@@ -20,6 +20,4 @@ dofile(vim.g.base46_cache .. "statusline")
 -- Setup options/autocmds/mappings.
 require("options")
 require("autocmds")
-vim.schedule(function()
-  require("mappings")
-end)
+vim.schedule(function() require("mappings") end)
