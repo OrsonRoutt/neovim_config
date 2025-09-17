@@ -14,27 +14,27 @@ autocmd("FileType", {
 
 -- Setup spell check filetypes.
 autocmd("FileType", {
-  pattern = { "markdown", "typst" },
-  callback = function()
-    vim.opt_local.spell = true
-  end,
+  pattern = { "markdown", "typst", "vimwiki" },
+  callback = function() vim.opt_local.spell = true end,
 })
 
--- Setup help file types.
+-- Setup help file type.
 autocmd({"BufRead", "BufNewFile"}, {
   group = vim.api.nvim_create_augroup("FiletypeHelp", { clear = true }),
   pattern = "*/doc/*.txt",
-  callback = function()
-    vim.bo.filetype = "help"
-  end,
+  callback = function() vim.bo.filetype = "help" end,
+})
+
+-- Setup vimwiki file type.
+autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.wiki",
+  callback = function() vim.bo.filetype = "vimwiki" end,
 })
 
 -- Yank highlight.
 autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+  callback = function() vim.highlight.on_yank() end,
 })
 
 -- NVChad 'User FilePost' event.
@@ -43,21 +43,15 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
   callback = function(args)
     local file = vim.api.nvim_buf_get_name(args.buf)
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-
     if not vim.g.ui_entered and args.event == "UIEnter" then
       vim.g.ui_entered = true
     end
-
     if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
       vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-      vim.api.nvim_del_augroup_by_name "NvFilePost"
-
+      vim.api.nvim_del_augroup_by_name("NvFilePost")
       vim.schedule(function()
         vim.api.nvim_exec_autocmds("FileType", {})
-
-        if vim.g.editorconfig then
-          require("editorconfig").config(args.buf)
-        end
+        if vim.g.editorconfig then require("editorconfig").config(args.buf) end
       end)
     end
   end,
