@@ -1,10 +1,10 @@
 local map = vim.keymap.set
 
--- Disable arrows in nornal.
-map("n", "<left>", "<Nop>", { silent = true, noremap = true })
-map("n", "<right>", "<Nop>", { silent = true, noremap = true })
-map("n", "<up>", "<Nop>", { silent = true, noremap = true })
-map("n", "<down>", "<Nop>", { silent = true, noremap = true })
+-- Disable arrows in normal and visual.
+map({"n", "v"}, "<left>", "<Nop>", { silent = true, noremap = true })
+map({"n", "v"}, "<right>", "<Nop>", { silent = true, noremap = true })
+map({"n", "v"}, "<up>", "<Nop>", { silent = true, noremap = true })
+map({"n", "v"}, "<down>", "<Nop>", { silent = true, noremap = true })
 
 -- Coq mappings.
 vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
@@ -91,13 +91,9 @@ map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true })
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
 -- Ufo mappings.
-map("n", "zR", require("ufo").openAllFolds, { desc = "ufo open all folds" })
-map("n", "zM", require("ufo").closeAllFolds, { desc = "ufo close all folds" })
-map("n", "zr", require("ufo").openFoldsExceptKinds, { desc = "ufo fold less" })
-map("n", "zm", require("ufo").closeFoldsWith, { desc = "ufo fold more" })
 map("n", "K", function()
-    local winid = require("ufo").peekFoldedLinesUnderCursor()
-    if not winid then vim.lsp.buf.hover() end
+  local winid = require("ufo").peekFoldedLinesUnderCursor()
+  if not winid then vim.lsp.buf.hover() end
 end, { desc = "lsp hover or ufo peek folded lines" })
 
 -- Telescope mappings.

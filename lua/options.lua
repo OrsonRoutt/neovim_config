@@ -9,9 +9,8 @@ o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
 
-o.foldlevel = 99
-o.foldlevelstart = 99
 o.foldenable = true
+o.foldlevelstart = 99
 
 o.expandtab = true
 o.shiftwidth = 2
