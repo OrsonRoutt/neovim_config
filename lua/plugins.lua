@@ -1,43 +1,22 @@
 return {
-  "nvim-lua/plenary.nvim",
-  {
-    "nvchad/base46",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
-  },
-  {
-    "nvchad/ui",
+  { -- Here temporarily until I work out a theming solution.
+    "lunarvim/horizon.nvim",
     lazy = false,
-    config = function() require("nvchad") end,
   },
   {
     "folke/which-key.nvim",
     lazy = false,
     cmd = "WhichKey",
-    opts = function()
-      dofile(vim.g.base46_cache .. "whichkey")
-      return {}
-    end,
   },
   {
     "nvim-tree/nvim-web-devicons",
-    opts = function()
-      dofile(vim.g.base46_cache .. "devicons")
-      return { override = require("nvchad.icons.devicons") }
-    end,
+    lazy = false,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
-    opts = {
-      indent = { char = "┆", highlight = "IblChar" },
-      scope = { char = "│", highlight = "IblScopeChar" },
-    },
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "blankline")
-      require("ibl").setup(opts)
-    end,
+    opts = function() return("configs.ibl_opts") end,
+    config = function(_, opts) require("ibl").setup(opts) end,
   },
   {
     "mason-org/mason.nvim",
@@ -59,9 +38,7 @@ return {
   {
     "windwp/nvim-autopairs",
     opts = function() require("configs.autopairs") end,
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-    end,
+    config = function(_, opts) require("nvim-autopairs").setup(opts) end,
   },
   {
     "johnfrankmorgan/whitespace.nvim",
@@ -79,13 +56,9 @@ return {
   {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
-    dependencies = {
-      { "nvim-lua/plenary.nvim", lazy = true },
-    },
+    dependencies = {{ "nvim-lua/plenary.nvim", lazy = true }},
     opts = require("configs.yazi"),
-    init = function()
-      vim.g.loaded_netrwPlugin = 1
-    end,
+    init = function() vim.g.loaded_netrwPlugin = 1 end,
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -95,9 +68,7 @@ return {
       "vimwiki/vimwiki",
     },
     cmd = "Telescope",
-    opts = function()
-      return require("configs.telescope")
-    end,
+    opts = function() return require("configs.telescope") end,
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
@@ -113,7 +84,7 @@ return {
   {
     "chomosuke/typst-preview.nvim",
     opts = require("configs.typst-preview"),
-    cmd = {"TypstPreviewUpdate", "TypstPreview", "TypstPreviewStop", "TypstPreviewToggle"},
+    cmd = { "TypstPreviewUpdate", "TypstPreview", "TypstPreviewStop", "TypstPreviewToggle" },
   },
   {
     "lewis6991/gitsigns.nvim",

@@ -1,5 +1,3 @@
-dofile(vim.g.base46_cache .. "telescope")
-
 local telescope = require("telescope")
 
 telescope.load_extension("fzf")

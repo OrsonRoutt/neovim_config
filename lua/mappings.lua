@@ -138,9 +138,9 @@ map("n", "<leader>gL", "<cmd>Grapple toggle_loaded<CR>", { desc = "grapple toggl
 -- Whitespace mappings.
 map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc = "trim whitespace" })
 
--- Base46 mappings.
-map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
-map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
+-- -- Base46 mappings.
+-- map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
+-- map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
 
 -- Gitsigns mappings.
 map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "git line blame" })

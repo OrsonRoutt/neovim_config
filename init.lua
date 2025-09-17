@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
 
 -- Bootstrap Lazy.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -12,8 +11,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(require("configs.lazy"))
 
 -- Load theme.
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+vim.cmd.colorscheme("horizon")
 
 -- Setup options/autocmds/mappings.
 require("options")
