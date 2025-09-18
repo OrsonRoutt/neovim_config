@@ -33,7 +33,7 @@ o.numberwidth = 2
 
 o.shortmess = "aoOtTIF"
 
-o.signcolumn = "yes"
+o.signcolumn = "yes:1"
 
 o.splitkeep = "screen"
 o.splitbelow = true
@@ -47,6 +47,11 @@ o.updatetime = 250
 
 require("scripts.statuscol")
 vim.o.statuscolumn = "%!v:lua.get_statuscol()"
+
+vim.diagnostic.config({
+  signs = false,
+  virtual_text = true,
+})
 
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
