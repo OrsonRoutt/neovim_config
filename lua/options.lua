@@ -6,6 +6,8 @@ o.showmode = false
 
 o.clipboard = "unnamedplus"
 
+o.guicursor = "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor,t:block-TermCursor,a:blinkon0"
+
 o.cursorline = true
 o.cursorlineopt = "number"
 

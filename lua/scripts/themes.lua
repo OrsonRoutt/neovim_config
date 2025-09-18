@@ -6,7 +6,7 @@ local function create_highlights(vars)
     ColorColumn = { fg = "NONE", bg = vars.ui.bg_alt },
     Conceal = { fg = vars.ui.dark, bg = "NONE" },
     CurSearch = { fg = vars.vim.cur_search_fg, bg = vars.vim.cur_search },
-    Cursor = { fg = vars.vim.cursorfg, bg = vars.vim.cursor_bg },
+    Cursor = { fg = vars.vim.cursor_fg, bg = vars.vim.cursor_bg },
     lCursor = { link = "Cursor" },
     CursorIM = { link = "Cursor" },
     CursorColumn = { fg = "NONE", bg = vars.vim.cursor_line },
