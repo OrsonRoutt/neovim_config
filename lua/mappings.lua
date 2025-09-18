@@ -84,11 +84,9 @@ end, { desc = "quickfix/loclist close" })
 map("n", "<M-o>", "<cmd>cope<CR>", { desc = "quickfix open" })
 map("n", "<M-O>", "<cmd>lop<CR>", { desc = "loclist open" })
 
--- Open error float.
-map("n", "<leader>E", function() vim.diagnostic.open_float({ focusable = true }) end, { desc = "error open float" })
-
--- Global LSP mappings.
-map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
+-- Diagnostic mappings.
+map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "diagnostic set loclist" })
+map("n", "<leader>df", function() vim.diagnostic.open_float({ focusable = true }) end, { desc = "diagnostic open float" })
 
 -- Ufo mappings.
 map("n", "K", function()
