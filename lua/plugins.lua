@@ -33,12 +33,12 @@ return {
   },
   {
     "windwp/nvim-autopairs",
-    opts = function() require("configs.autopairs") end,
+    opts = function() return require("configs.autopairs") end,
     config = function(_, opts) require("nvim-autopairs").setup(opts) end,
   },
   {
     "johnfrankmorgan/whitespace.nvim",
-    opts = function() require("configs.whitespace") end,
+    opts = function() return require("configs.whitespace") end,
     event = "User FilePost",
   },
   {
@@ -91,7 +91,7 @@ return {
   {
     "max397574/better-escape.nvim",
     lazy = false,
-    opts = require("configs.better_escape"),
+    opts = function() return require("configs.better_escape") end,
   },
   {
     "vimwiki/vimwiki",
@@ -106,6 +106,7 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = { "kevinhwang91/promise-async" },
-    config = function() require("ufo").setup(require("configs.ufo_opts")) end,
+    opts = function() return require("configs.ufo_opts") end,
+    config = function(_, opts) require("ufo").setup(opts) end,
   }
 }

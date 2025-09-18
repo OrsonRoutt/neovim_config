@@ -4,7 +4,6 @@ local function get_selector(bufnr)
             return require("ufo").getFolds(bufnr, provider_name)
         else return require("promise").reject(err) end
     end
-
     return require("ufo").getFolds(bufnr, "lsp"):catch(function(err)
         return handle_fallback_exception(err, "treesitter")
     end):catch(function(err)

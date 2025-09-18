@@ -6,14 +6,14 @@ map({"n", "v"}, "<right>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<up>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<down>", "<Nop>", { silent = true, noremap = true })
 
--- Coq mappings.
+-- Coq/autopairs mappings.
 vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<BS>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<up>", [[pumvisible() ? "<C-e><up>" : "<up>"]], { expr = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<down>", [[pumvisible() ? "<C-e><down>" : "<down>"]], { expr = true, noremap = true })
-map("i", "<CR>", _G.user.CR, { silent = true })
-map("i", "<BS>", _G.user.BS, { silent = true })
+vim.api.nvim_set_keymap("i", "<CR>", "v:lua.user.CR()", { expr = true, noremap = true })
+vim.api.nvim_set_keymap("i", "<BS>", "v:lua.user.BS()", { expr = true, noremap = true })
 
 -- Toggle mouse.
 map("n", "<leader>M", function()
