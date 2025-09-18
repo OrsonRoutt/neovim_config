@@ -11,7 +11,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(require("configs.lazy"))
 
 -- Load theme.
-vim.cmd.colorscheme("horizon")
+require("scripts.themes").load_theme("horizon")
 
 -- Setup options/autocmds/mappings.
 require("options")

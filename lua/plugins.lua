@@ -1,8 +1,4 @@
 return {
-  { -- Here temporarily until I work out a theming solution.
-    "lunarvim/horizon.nvim",
-    lazy = false,
-  },
   {
     "folke/which-key.nvim",
     lazy = false,
@@ -15,7 +11,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
-    opts = function() return("configs.ibl_opts") end,
+    opts = function() return require("configs.ibl_opts") end,
     config = function(_, opts) require("ibl").setup(opts) end,
   },
   {

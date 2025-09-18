@@ -6,7 +6,7 @@ return {
     "cpp", "c", "markdown",
     "markdown_inline", "luadoc",
     "printf", "sql", "php",
-    "typst",
+    "typst", "comment"
   },
   highlight = {
     enable = true,
