@@ -130,15 +130,22 @@ map("n", "<leader>g6", "<cmd>Grapple select index=6<CR>", { desc = "grapple sele
 map("n", "<leader>g7", "<cmd>Grapple select index=7<CR>", { desc = "grapple select tag 7" })
 map("n", "<leader>g8", "<cmd>Grapple select index=8<CR>", { desc = "grapple select tag 8" })
 map("n", "<leader>g9", "<cmd>Grapple select index=9<CR>", { desc = "grapple select tag 9" })
+map("n", "<leader>g0", "<cmd>Grapple select index=10<CR>", { desc = "grapple select tag 10" })
 map("n", "<leader>gS", "<cmd>Grapple toggle_scopes<CR>", { desc = "grapple toggle scopes window" })
 map("n", "<leader>gL", "<cmd>Grapple toggle_loaded<CR>", { desc = "grapple toggle loaded scopes window" })
 
 -- Whitespace mappings.
 map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc = "trim whitespace" })
 
--- -- Base46 mappings.
+-- Theme mappings.
 -- map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
--- map("n", "<leader>T", function() require("base46").toggle_transparency() end, { desc = "base46 toggle transparency" })
+map("n", "<leader>ts", function() require("scripts.themes").save_theme_file() end, { desc = "theme save" })
+map("n", "<leader>tt", function()
+  vim.g.transparent = not vim.g.transparent
+  if require("scripts.themes").load_theme() then
+    vim.schedule(function() vim.notify("Toggled transparency.", vim.log.levels.INFO) end)
+  end
+end, { desc = "theme toggle transparent" })
 
 -- Gitsigns mappings.
 map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "git line blame" })

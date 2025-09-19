@@ -266,13 +266,16 @@ local sep_hls = {
   "WinSeparator",
 }
 
-M.load_theme = function(name)
-  local theme = require("themes." .. name)
+M.load_theme = function()
+  local status, theme = pcall(require, "themes." .. vim.g.theme)
+  if not status then
+    vim.notify("Failed to load theme file '"  .. vim.g.theme .. "'.", vim.log.levels.ERROR)
+    return false
+  end
   vim.cmd("hi clear")
   vim.o.background = "dark"
   if vim.fn.exists("syntax_on") then vim.cmd("syntax reset") end
   vim.o.termguicolors = true
-  vim.g.colors_name = name
   local vars = theme.get_vars()
   local highlights = create_highlights(vars)
   highlights = vim.tbl_deep_extend("force", highlights, theme.get_highlights())
@@ -293,6 +296,24 @@ M.load_theme = function(name)
     vim.api.nvim_set_hl(0, k, v)
   end
   theme.config()
+  return true
+end
+
+M.save_theme_file = function()
+  local res = require("scripts.fileio").save_file(vim.g.theme_file, { name = vim.g.theme, tr = vim.g.transparent })
+  if not res then vim.notify("Failed to save theme to file.", vim.log.levels.ERROR)
+  else vim.notify("Saved theme to file.", vim.log.levels.INFO) end
+end
+
+M.load_theme_file = function()
+  local conf = require("scripts.fileio").load_file(vim.g.theme_file)
+  if conf == nil then
+    vim.notify("Failed to load theme from file.", vim.log.levels.ERROR)
+  else
+    vim.g.theme = conf.name
+    vim.g.transparent = conf.tr
+    M.load_theme()
+  end
 end
 
 return M

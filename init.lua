@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.g.theme_file = vim.fn.stdpath("data") .. "/theme.lua"
 
 -- Bootstrap Lazy.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -11,7 +12,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(require("configs.lazy"))
 
 -- Load theme.
-require("scripts.themes").load_theme("horizon")
+require("scripts.themes").load_theme_file()
 
 -- Setup options/autocmds/mappings.
 require("options")
