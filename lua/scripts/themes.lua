@@ -292,9 +292,7 @@ M.load_theme = function()
       end
     end
   end
-  for k, v in pairs(highlights) do
-    vim.api.nvim_set_hl(0, k, v)
-  end
+  for k, v in pairs(highlights) do vim.api.nvim_set_hl(0, k, v) end
   theme.config()
   return true
 end
@@ -307,13 +305,20 @@ end
 
 M.load_theme_file = function()
   local conf = require("scripts.fileio").load_file(vim.g.theme_file)
-  if conf == nil then
-    vim.notify("failed to load theme from file", vim.log.levels.ERROR)
+  if conf == nil then vim.notify("failed to load theme from file", vim.log.levels.ERROR)
   else
     vim.g.theme = conf.name
     vim.g.transparent = conf.tr
     M.load_theme()
   end
+end
+
+M.set_theme = function(name)
+  local prev = vim.g.theme
+  vim.g.theme = name
+  if M.load_theme() then
+    vim.schedule(function() vim.notify("set theme to '" .. name .. "'", vim.log.levels.INFO) end)
+  else vim.g.theme = prev end
 end
 
 return M
