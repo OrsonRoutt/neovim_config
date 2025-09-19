@@ -269,7 +269,7 @@ local sep_hls = {
 M.load_theme = function()
   local status, theme = pcall(require, "themes." .. vim.g.theme)
   if not status then
-    vim.notify("Failed to load theme file '"  .. vim.g.theme .. "'.", vim.log.levels.ERROR)
+    vim.notify("failed to load theme file: '"  .. vim.g.theme .. "'", vim.log.levels.ERROR)
     return false
   end
   vim.cmd("hi clear")
@@ -301,14 +301,14 @@ end
 
 M.save_theme_file = function()
   local res = require("scripts.fileio").save_file(vim.g.theme_file, { name = vim.g.theme, tr = vim.g.transparent })
-  if not res then vim.notify("Failed to save theme to file.", vim.log.levels.ERROR)
-  else vim.notify("Saved theme to file.", vim.log.levels.INFO) end
+  if not res then vim.notify("failed to save theme to file", vim.log.levels.ERROR)
+  else vim.notify("saved theme to file", vim.log.levels.INFO) end
 end
 
 M.load_theme_file = function()
   local conf = require("scripts.fileio").load_file(vim.g.theme_file)
   if conf == nil then
-    vim.notify("Failed to load theme from file.", vim.log.levels.ERROR)
+    vim.notify("failed to load theme from file", vim.log.levels.ERROR)
   else
     vim.g.theme = conf.name
     vim.g.transparent = conf.tr

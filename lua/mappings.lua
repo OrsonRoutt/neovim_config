@@ -141,11 +141,22 @@ map("n", "<leader>tw", function() require("whitespace-nvim").trim() end, { desc 
 -- map("n", "<leader>tt", function() require("base46").toggle_theme() end, { desc = "base46 toggle theme" })
 map("n", "<leader>ts", function() require("scripts.themes").save_theme_file() end, { desc = "theme save" })
 map("n", "<leader>tt", function()
-  vim.g.transparent = not vim.g.transparent
+  local prev_tr = vim.g.transparent
+  vim.g.transparent = not prev_tr
   if require("scripts.themes").load_theme() then
-    vim.schedule(function() vim.notify("Toggled transparency.", vim.log.levels.INFO) end)
-  end
+    vim.schedule(function() vim.notify("toggled transparency", vim.log.levels.INFO) end)
+  else vim.g.transparent = prev_tr end
 end, { desc = "theme toggle transparent" })
+vim.api.nvim_create_user_command("Theme", function(args)
+  if #args.fargs == 0 then vim.notify("current theme is: '" .. vim.g.theme .. "'")
+  else
+    local prev_theme = vim.g.theme
+    vim.g.theme = args.fargs[1]
+    if require("scripts.themes").load_theme() then
+      vim.schedule(function() vim.notify("set theme to: '" .. vim.g.theme .. "'", vim.log.levels.INFO) end)
+    else vim.g.theme = prev_theme end
+  end
+end, { nargs = "?" })
 
 -- Gitsigns mappings.
 map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "git line blame" })
