@@ -240,10 +240,14 @@ local function create_highlights(vars)
     },
     ibl = { -- Indent Blankline
       IblIndent = { link = "NonText" },
-      IblScope = { link = "NonText" },
+      IblScope = { link = "Normal" },
     },
     whichkey = { -- WhichKey
       WhichKeyNormal = { fg = vars.ui.fg, bg = vars.ui.bg_alt },
+    },
+    yazi = {
+      YaziFloat = { link = "Normal" },
+      YaziFloatBorder = { link = "WinSeparator" },
     },
     -- telescope = { -- Telescope
     --   TelescopeSelection = { fg = "NONE", bg = vars.vim.search },
@@ -271,6 +275,9 @@ local background_hls = {
   whichkey = {
     "WhichKeyNormal",
   },
+  yazi = {
+    "YaziFloat",
+  },
   telescope = {
     "TelescopeNormal",
     "TelescopePromptNormal",
@@ -281,6 +288,9 @@ local sep_hls = {
   default = {
     "FloatBorder",
     "WinSeparator",
+  },
+  yazi = {
+    "YaziFloatBorder",
   },
   telescope = {
     "TelescopeBorder",
@@ -366,8 +376,8 @@ M.load_plugin_hls = function(name)
   if cache and cache[name] and cache[name] ~= true then
     for k, v in pairs(cache[name]) do vim.api.nvim_set_hl(0, k, v) end
     cache[name] = true
+    vim.g.theme_cache = cache
   end
-  vim.g.theme_cache = cache
 end
 
 M.save_theme_file = function()

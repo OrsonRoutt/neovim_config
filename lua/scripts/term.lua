@@ -2,13 +2,42 @@ local M = {}
 
 local terms = {}
 
+local function tabline_height()
+  local opt = vim.o.showtabline
+  if opt == 0 then return 0
+  elseif opt == 2 then return 1
+  elseif vim.fn.tabpagenr("$") > 1 then return 1
+  else return 0 end
+end
+
+local function bottom_height()
+  local h = vim.o.cmdheight
+  local sopt = vim.o.laststatus
+  if sopt == 0 then return h
+  elseif sopt == 1 then
+    local wins = vim.api.nvim_tabpage_list_wins(0)
+    local count = 0
+    for _, win in ipairs(wins) do
+      if vim.api.nvim_win_get_config(win).relative == "" then count = count + 1 end
+    end
+    return count > 1 and h + 1 or h
+  else return h + 1 end
+end
+
 local function create_float(buf, opts)
+  local theight = tabline_height()
+  local vwidth = vim.o.columns
+  local vheight = vim.o.lines - theight - bottom_height()
+  local width = math.ceil(opts.width * vwidth)
+  if width % 2 ~= vwidth % 2 then width = width - 1 end
+  local height = math.ceil(opts.height * vheight)
+  if height % 2 ~= vheight % 2 then height = height - 1 end
   local win_opts = {
     relative = "editor",
-    width = math.ceil(opts.width * vim.o.columns),
-    height = math.ceil(opts.height * vim.o.lines),
-    row = math.ceil(opts.row * vim.o.lines),
-    col = math.ceil(opts.col * vim.o.columns),
+    width = width,
+    height = height,
+    row = theight + (vheight - height) / 2 - 1,
+    col = (vwidth - width) / 2 - 1,
     style = "minimal",
     border = "rounded",
   }
@@ -16,12 +45,13 @@ local function create_float(buf, opts)
 end
 
 local function create_split(buf, opts)
+  local win = vim.api.nvim_get_current_win()
   local win_opts = {
-    win = vim.api.nvim_get_current_win(),
+    win = win,
     split = opts.split,
   }
-  if opts.height ~= nil then win_opts.height = math.ceil(opts.height * vim.o.lines) end
-  if opts.width ~= nil then win_opts.width = math.ceil(opts.width * vim.o.columns) end
+  if opts.height ~= nil then win_opts.height = math.ceil(opts.height * vim.api.nvim_win_get_height(win)) end
+  if opts.width ~= nil then win_opts.width = math.ceil(opts.width * vim.api.nvim_win_get_width(win)) end
   vim.api.nvim_open_win(buf, true, win_opts)
 end
 

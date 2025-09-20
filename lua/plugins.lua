@@ -54,9 +54,12 @@ return {
   },
   {
     "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
+    cmd = { "Yazi" },
     dependencies = {{ "nvim-lua/plenary.nvim", lazy = true }},
-    opts = require("configs.yazi"),
+    opts = function()
+      require("scripts.themes").load_plugin_hls("yazi")
+      return require("configs.yazi")
+    end,
     init = function() vim.g.loaded_netrwPlugin = 1 end,
   },
   {

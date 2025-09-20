@@ -181,15 +181,13 @@ map("n", "<leader>h", function() require("scripts.term").new_split({ split = "be
 end, { desc = "terminal new horizontal term" })
 map("n", "<A-h>", function() require("scripts.term").tggl_split({ id = 0, toggle = "<A-h>", split = "below", height = 0.3 })
 end, { desc = "terminal toggle horizontal term" })
-map("n", "<A-i>", function() require("scripts.term").tggl_float({ id = 1, row = 0.05, col = 0.05, width = 0.9, height = 0.8, toggle = "<A-i>" })
+map("n", "<A-i>", function() require("scripts.term").tggl_float({ id = 1, width = 0.9, height = 0.8, toggle = "<A-i>" })
 end, { desc = "terminal toggle floating term" })
 
 -- Terminal job mappings.
 map("n", "<C-g>", function()
   require("scripts.term").tggl_float_job({
     id = 2,
-    row = 0.05,
-    col = 0.05,
     width = 0.9,
     height = 0.8,
     job = "lazygit",

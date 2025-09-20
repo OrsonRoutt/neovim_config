@@ -5,4 +5,8 @@ return {
     height = 0.8,
   },
   enable_mouse_support = false,
+  highlight_hovered_buffers_in_same_directory = false,
+  highlight_groups = {
+    hovered_buffer = {},
+  },
 }
