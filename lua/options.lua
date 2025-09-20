@@ -21,6 +21,9 @@ o.tabstop = 2
 o.softtabstop = 2
 o.backspace = "indent,eol,start"
 
+o.scrolloff = 10
+o.sidescrolloff = 20
+
 o.ignorecase = true
 o.smartcase = true
 
@@ -41,6 +44,9 @@ o.splitright = true
 
 o.timeoutlen = 300
 
+o.backup = false
+o.writebackup = false
+o.swapfile = false
 o.undofile = true
 
 o.updatetime = 250
