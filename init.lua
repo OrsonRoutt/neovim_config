@@ -7,11 +7,11 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Setup Lazy plugins.
-require("lazy").setup(require("configs.lazy"))
-
 -- Setup themes.
 require("themes")
+
+-- Setup Lazy plugins.
+require("lazy").setup(require("configs.lazy"))
 
 -- Setup options/autocmds/mappings.
 require("options")

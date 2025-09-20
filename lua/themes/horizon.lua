@@ -111,18 +111,19 @@ M.get_vars = function() return vars end
 
 M.get_highlights = function()
   return {
-    -- Telescope
-    TelescopeSelection = { fg = "NONE", bg = c.ui2_blue },
-    TelescopeSelectionCaret = { fg = c.red, bg = c.ui2_blue },
-    TelescopeMatching = { fg = c.yellow, bg = "NONE", bold=true, italic=true },
-    TelescopeBorder = { fg = c.fg, bg = "NONE" },
-    TelescopeNormal = { fg = c.light_gray, bg = c.bg },
-    TelescopePromptTitle = { fg = c.orange, bg = "NONE" },
-    TelescopePromptPrefix = { fg = c.cyan, bg = "NONE" },
-    TelescopeResultsTitle = { fg = c.orange, bg = "NONE" },
-    TelescopePreviewTitle = { fg = c.orange, bg = "NONE" },
-    TelescopePromptCounter = { fg = c.red, bg = "NONE" },
-    TelescopePreviewHyphen = { fg = c.red, bg = "NONE" },
+    telescope = {
+      TelescopeSelection = { fg = "NONE", bg = vars.vim.search },
+      TelescopeSelectionCaret = { fg = c.red, bg = vars.vim.search },
+      TelescopeMatching = { fg = c.yellow, bg = "NONE", bold=true, italic=true },
+      TelescopeBorder = { fg = c.fg, bg = "NONE" },
+      TelescopeNormal = { fg = c.light_gray, bg = c.bg },
+      TelescopePromptTitle = { fg = c.orange, bg = "NONE" },
+      TelescopePromptPrefix = { fg = c.cyan, bg = "NONE" },
+      TelescopeResultsTitle = { fg = c.orange, bg = "NONE" },
+      TelescopePreviewTitle = { fg = c.orange, bg = "NONE" },
+      TelescopePromptCounter = { fg = c.red, bg = "NONE" },
+      TelescopePreviewHyphen = { fg = c.red, bg = "NONE" },
+    }
   }
 end
 

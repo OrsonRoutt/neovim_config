@@ -2,7 +2,7 @@ return {
   {
     "folke/which-key.nvim",
     lazy = false,
-    cmd = "WhichKey",
+    opts = function() require("scripts.themes").load_plugin_hls("whichkey") end,
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -11,7 +11,10 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
-    opts = function() return require("configs.ibl_opts") end,
+    opts = function()
+      require("scripts.themes").load_plugin_hls("ibl")
+      return require("configs.ibl_opts")
+    end,
     config = function(_, opts) require("ibl").setup(opts) end,
   },
   {
@@ -64,7 +67,10 @@ return {
       "vimwiki/vimwiki",
     },
     cmd = "Telescope",
-    opts = function() return require("configs.telescope") end,
+    opts = function()
+      require("scripts.themes").load_plugin_hls("telescope")
+      return require("configs.telescope")
+    end,
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
