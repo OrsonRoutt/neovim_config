@@ -245,21 +245,24 @@ local function create_highlights(vars)
     whichkey = { -- WhichKey
       WhichKeyNormal = { fg = vars.ui.fg, bg = vars.ui.bg_alt },
     },
-    yazi = {
+    yazi = { -- Yazi
       YaziFloat = { link = "Normal" },
       YaziFloatBorder = { link = "WinSeparator" },
     },
-    -- telescope = { -- Telescope
-    --   TelescopeSelection = { fg = "NONE", bg = vars.vim.search },
-    --   TelescopeSelectionCaret = { fg = vars.code.variable, bg = vars.vim.search },
-    --   TelescopeMatching = { fg = vars.code.type, bg = "NONE", bold=true },
-    --   TelescopeBorder = { fg = vars.ui.sep, bg = "NONE" },
-    --   TelescopeNormal = { fg = vars.ui.light, bg = "NONE" },
-    --   TelescopeTitle = { fg = vars.code.special, bg = "NONE" },
-    --   TelescopePromptPrefix = { fg = vars.code.func, bg = "NONE" },
-    --   TelescopePromptCounter = { fg = vars.code.variable, bg = "NONE" },
-    --   TelescopePreviewHyphen = { fg = vars.code.variable, bg = "NONE" },
-    -- },
+    telescope = { -- Telescope
+      TelescopeSelection = { fg = "NONE", bg = vars.vim.search },
+      TelescopeSelectionCaret = { fg = vars.code.variable, bg = vars.vim.search },
+      TelescopeMultiSelection = { link = "Special" },
+      TelescopeMultiIcon = { link = "Identifier" },
+      TelescopeNormal = { fg = vars.ui.light, bg = "NONE" },
+      TelescopeBorder = { fg = vars.ui.sep, bg = "NONE" },
+      TelescopeTitle = { fg = vars.code.literal, bg = "NONE" },
+      TelescopePromptCounter = { link = "Identifier" },
+      TelescopeMatching = { link = "Type" },
+      TelescopePromptPrefix = { link = "Function" },
+      TelescopePreviewLine = { link = "Visual" },
+      TelescopePreviewMatch = { link = "Search" },
+    },
   }
 end
 
@@ -280,7 +283,9 @@ local background_hls = {
   },
   telescope = {
     "TelescopeNormal",
+    "TelescopePreviewNormal",
     "TelescopePromptNormal",
+    "TelescopeResultsNormal",
   },
 }
 
@@ -295,6 +300,8 @@ local sep_hls = {
   telescope = {
     "TelescopeBorder",
     "TelescopePromptBorder",
+    "TelescopeResultsBorder",
+    "TelescopePreviewBorder",
   },
 }
 
