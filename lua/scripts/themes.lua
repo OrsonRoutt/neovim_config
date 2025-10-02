@@ -237,6 +237,15 @@ local function create_highlights(vars)
       ["@tag.delimiter"] = { link = "Tag" },
       -- Treesitter Languages
       ["@attribute.gdscript"] = { link = "@attribute.builtin" }, -- All attributes in gdscript are builtin but they are not flagged as such.
+      -- Statusline [WIP]
+      Stl_Normal = { fg = vars.ui.bg, bg = vars.code.func },
+      Stl_Visual = { fg = vars.ui.bg, bg = vars.code.hint },
+      Stl_Select = { fg = vars.ui.bg, bg = vars.code.type },
+      Stl_Insert = { fg = vars.ui.bg, bg = vars.code.keyword },
+      Stl_Replace = { fg = vars.ui.bg, bg = vars.code.literal },
+      Stl_Command = { fg = vars.ui.bg, bg = vars.diag.ok },
+      Stl_Confirm = { fg = vars.ui.bg, bg = vars.ui.special },
+      Stl_Terminal = { fg = vars.ui.bg, bg = vars.diff.add },
     },
     ibl = { -- Indent Blankline
       IblIndent = { link = "NonText" },

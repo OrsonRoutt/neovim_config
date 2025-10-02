@@ -113,12 +113,13 @@ map("n", "<leader>fg", "<cmd>Telescope grapple tags<CR>", { desc = "telescope fi
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
 
-map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 
 map("n", "<leader>wf", "<cmd>Telescope vw<CR>", { desc = "telescope find in vimwiki" })
 map("n", "<leader>wg", "<cmd>Telescope vw live_grep<CR>", { desc = "telescope live grep in vimwiki" })
 map("n", "<leader>wl", "<cmd>Telescope vw link<CR>", { desc = "telescope live grep in vimwiki link" })
+-- TODO: REIMPLEMENT
+-- map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 
 -- Grapple actions.
 map("n", "<leader>gt", "<cmd>Grapple toggle<CR>", { desc = "grapple toggle tag" })

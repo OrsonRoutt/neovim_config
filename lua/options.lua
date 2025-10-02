@@ -53,6 +53,8 @@ o.updatetime = 250
 
 require("scripts.statuscol")
 vim.o.statuscolumn = "%!v:lua.get_statuscol()"
+require("scripts.statusline")
+vim.o.statusline = "%!v:lua.get_statusline()"
 
 vim.diagnostic.config({
   signs = false,
