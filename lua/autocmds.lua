@@ -37,6 +37,11 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
+autocmd("LspProgress", {
+  pattern = "*",
+  command = "redrawstatus",
+})
+
 -- NVChad 'User FilePost' event.
 autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
   group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),

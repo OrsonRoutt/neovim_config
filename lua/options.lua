@@ -61,6 +61,8 @@ vim.diagnostic.config({
   virtual_text = true,
 })
 
+g.qf_disable_statusline = 1
+
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0

@@ -48,11 +48,15 @@ local function get_stl_mode()
 end
 
 local function get_stl_file()
+  local file
+  if vim.bo.filetype == "qf" and vim.w.quickfix_title then
+    file = "%f " .. vim.w.quickfix_title .. " "
+  else file = "%f " end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
   if vals.width > 0 then
-    return "%#Stl_Highlight# %f " .. vals.str .. " %#StatusLine#"
+    return "%#Stl_Highlight# " .. file .. vals.str .. " %#StatusLine#"
   end
-  return "%#Stl_Highlight# %f %#StatusLine#"
+  return "%#Stl_Highlight# " .. file .. "%#StatusLine#"
 end
 
 local function get_stl_pos()
@@ -73,10 +77,9 @@ end
 
 local function get_stl_before_pos()
   local buf = get_buf()
-  local grapple = ""
-  if vim.g.grapple then
-    grapple = "%#@keyword#" .. require("grapple").statusline() .. "%#StatusLine# | "
-  end
+  local res = ""
+  local encoding = vim.opt.fileencoding:get()
+  if #encoding ~= 0 then res = string.upper(encoding) .. " " end
   local lsp = ""
   if vim.lsp then
     local err = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.ERROR })
@@ -93,10 +96,19 @@ local function get_stl_before_pos()
         break
       end
     end
-    if #lsp ~= 0 then lsp = lsp .. "%#StatusLine# | " end
+    if #lsp ~= 0 then
+      if #res ~= 0 then res = "| " .. res end
+      res = lsp .. "%#StatusLine# " .. res
+    end
   end
-  local encoding = string.upper(vim.opt.fileencoding:get()) .. " "
-  return grapple .. lsp .. encoding
+  if vim.g.grapple then
+    local grapple = require("grapple").statusline()
+    if #grapple ~= 0 then
+      if #res ~= 0 then res = "| " .. res end
+      res = "%#@keyword#" .. grapple .. "%#StatusLine# " .. res
+    end
+  end
+  return res
 end
 
 _G.get_statusline = function()
