@@ -82,7 +82,10 @@ return {
   {
     "cbochs/grapple.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = require("configs.grapple_opts"),
+    opts = function()
+      vim.g.grapple = true
+      return require("configs.grapple_opts")
+    end,
     event = { "BufReadPost", "BufNewFile" },
     cmd = "Grapple",
   },

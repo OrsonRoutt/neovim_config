@@ -56,22 +56,47 @@ local function get_stl_file()
 end
 
 local function get_stl_pos()
-  return "%#Stl_Highlight# %l/%L, %c "
+  local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+  return "%#Stl_Highlight#  " .. cwd .. " | %l/%L, %c "
 end
 
 local function get_stl_after_file()
   local buf = vim.b[get_buf()]
   if not buf.gitsigns_status then return "" end
   local git_data = buf.gitsigns_status_dict
-  local gitsigns = " 󰘬 " .. git_data.head
-  if git_data.added and git_data.added ~= 0 then gitsigns = gitsigns .. " %#GitSignsAdd# " .. git_data.added end
-  if git_data.changed and git_data.changed ~= 0 then gitsigns = gitsigns .. " %#GitSignsChange# " .. git_data.changed end
-  if git_data.removed and git_data.removed ~= 0 then gitsigns = gitsigns .. " %#GitSignsDelete# " .. git_data.removed end
-  return gitsigns .. "%#StatusLine#"
+  local git = " 󰘬 " .. git_data.head
+  if git_data.added and git_data.added ~= 0 then git = git .. " %#GitsignsAdd# " .. git_data.added end
+  if git_data.changed and git_data.changed ~= 0 then git = git .. " %#GitsignsChange# " .. git_data.changed end
+  if git_data.removed and git_data.removed ~= 0 then git = git .. " %#GitsignsDelete# " .. git_data.removed end
+  return git .. "%#StatusLine#"
 end
 
 local function get_stl_before_pos()
-  return ""
+  local buf = get_buf()
+  local grapple = ""
+  if vim.g.grapple then
+    grapple = "%#@keyword#" .. require("grapple").statusline() .. "%#StatusLine# | "
+  end
+  local lsp = ""
+  if vim.lsp then
+    local err = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.ERROR })
+    local warn = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.WARN })
+    local hint = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.HINT })
+    local info = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.INFO })
+    if err and err ~= 0 then lsp = lsp .. "%#DiagnosticError# " .. err .. " " end
+    if warn and warn ~= 0 then lsp = lsp .. "%#DiagnosticWarn# " .. warn .. " " end
+    if hint and hint ~= 0 then lsp = lsp .. "%#DiagnosticHint# " .. hint .. " " end
+    if info and info ~= 0 then lsp = lsp .. "%#DiagnosticInfo# " .. info .. " " end
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      if client.attached_buffers[buf] then
+        lsp = lsp .. "%#@function#  " .. client.name
+        break
+      end
+    end
+    if #lsp ~= 0 then lsp = lsp .. "%#StatusLine# | " end
+  end
+  local encoding = string.upper(vim.opt.fileencoding:get()) .. " "
+  return grapple .. lsp .. encoding
 end
 
 _G.get_statusline = function()
