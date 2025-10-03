@@ -71,7 +71,7 @@ return {
     cmd = "Telescope",
     opts = function()
       require("scripts.themes").load_plugin_hls("telescope")
-      return require("configs.telescope")
+      return require("configs.telescope_opts")
     end,
   },
   {

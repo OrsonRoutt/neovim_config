@@ -15,7 +15,7 @@ ffi.cdef([[
 local error = ffi.new("Error")
 
 local function get_fold(lnum)
-  local foldinfo = ffi.C.fold_info(ffi.C.find_window_by_handle(vim.api.nvim_get_current_win(), error), lnum)
+  local foldinfo = ffi.C.fold_info(ffi.C.find_window_by_handle(vim.g.statusline_winid, error), lnum)
   return lnum == foldinfo.start and (foldinfo.lines > 0 and "" or "") or " "
 end
 

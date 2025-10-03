@@ -2,6 +2,7 @@ local telescope = require("telescope")
 
 telescope.load_extension("fzf")
 telescope.load_extension("vw")
+telescope.load_extension("terms")
 
 return {
   defaults = {
@@ -21,7 +22,6 @@ return {
       n = { ["q"] = require("telescope.actions").close },
     },
   },
-  extensions_list = { "themes", "terms" },
   extensions = {
     fzf = {
       fuzzy = true,

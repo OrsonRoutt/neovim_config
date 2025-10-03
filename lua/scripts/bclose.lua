@@ -61,13 +61,13 @@ M.cleanup = function()
 end
 
 M.cleanup_term = function()
-  local bufs = filter_working(filter_terminal(vim.fn.getbufinfo({ buflisted = 1 })))
+  local bufs = filter_working(filter_terminal(vim.fn.getbufinfo()))
   del(bufs)
   print("cleaned " .. #bufs .. " terminals")
 end
 
 M.delete_term = function()
-  local bufs = filter_terminal(vim.fn.getbufinfo({ buflisted = 1 }))
+  local bufs = filter_terminal(vim.fn.getbufinfo())
   del(bufs)
   print("deleted " .. #bufs .. " terminals")
 end
