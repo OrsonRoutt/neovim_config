@@ -105,6 +105,19 @@ local vars = {
     func = c.cyan,
     operator = c.fg,
   },
+  stl = {
+    fg = c.fg,
+    bg = c.dark_gray,
+    bg_hi = c.gray,
+    normal = c.cyan,
+    visual = c.hint,
+    select = c.orange,
+    insert = c.purple,
+    replace = c.yellow,
+    command = c.sign_add,
+    confirm = c.hint,
+    terminal = c.sign_add,
+  },
 }
 
 M.get_vars = function() return vars end
