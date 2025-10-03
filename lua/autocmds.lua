@@ -37,6 +37,16 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
+-- Close terminals on ok status.
+autocmd("TermClose", {
+  callback = function(opts)
+    if vim.v.event.status == 0 then
+      vim.api.nvim_buf_delete(opts.buf, { force = true })
+    end
+  end,
+})
+
+-- Update statusline on LSP progress.
 autocmd("LspProgress", {
   pattern = "*",
   command = "redrawstatus",
