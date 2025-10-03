@@ -1,8 +1,6 @@
 return {
   defaults = { lazy = true },
 
-  install = { colorscheme = {"nvchad"}},
-
   spec = { import = "plugins" },
 
   ui = {
@@ -17,33 +15,15 @@ return {
   performance = {
     rtp = {
       disabled_plugins = {
-        "2html_plugin",
         "tohtml",
-        "getscript",
-        "getscriptPlugin",
         "gzip",
-        "logipat",
-        "netrw",
-        "netrwPlugin",
-        "netrwSettings",
-        "netrwFileHandlers",
         "matchit",
-        "tar",
+        "netrwPlugin",
         "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
-        "zip",
+        "spellfile",
         "zipPlugin",
         "tutor",
         "rplugin",
-        "syntax",
-        "synmenu",
-        "optwin",
-        "compiler",
-        "bugreport",
-        "ftplugin",
       },
     },
   },

@@ -60,7 +60,6 @@ return {
       require("scripts.themes").load_plugin_hls("yazi")
       return require("configs.yazi")
     end,
-    init = function() vim.g.loaded_netrwPlugin = 1 end,
   },
   {
     "nvim-telescope/telescope.nvim",
