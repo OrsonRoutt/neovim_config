@@ -135,7 +135,6 @@ map("n", "<leader>g6", "<cmd>Grapple select index=6<CR>", { desc = "grapple sele
 map("n", "<leader>g7", "<cmd>Grapple select index=7<CR>", { desc = "grapple select tag 7" })
 map("n", "<leader>g8", "<cmd>Grapple select index=8<CR>", { desc = "grapple select tag 8" })
 map("n", "<leader>g9", "<cmd>Grapple select index=9<CR>", { desc = "grapple select tag 9" })
-map("n", "<leader>g0", "<cmd>Grapple select index=10<CR>", { desc = "grapple select tag 10" })
 map("n", "<leader>gS", "<cmd>Grapple toggle_scopes<CR>", { desc = "grapple toggle scopes window" })
 map("n", "<leader>gL", "<cmd>Grapple toggle_loaded<CR>", { desc = "grapple toggle loaded scopes window" })
 
