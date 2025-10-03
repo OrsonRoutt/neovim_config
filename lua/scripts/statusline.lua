@@ -48,10 +48,10 @@ local function get_stl_mode()
 end
 
 local function get_stl_file()
-  local file
+  local file = vim.o.columns > 100 and "%f " or "%t "
   if vim.bo.filetype == "qf" and vim.w.quickfix_title then
-    file = "%f " .. vim.w.quickfix_title .. " "
-  else file = "%f " end
+    file = file .. vim.w.quickfix_title .. " "
+  end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
   if vals.width > 0 then
     return "%#Stl_Highlight# " .. file .. vals.str .. " %#StatusLine#"
@@ -66,12 +66,14 @@ end
 
 local function get_stl_after_file()
   local buf = vim.b[get_buf()]
-  if not buf.gitsigns_status then return "" end
+  if not buf.gitsigns_status or vim.o.columns <= 100 then return "" end
   local git_data = buf.gitsigns_status_dict
   local git = " 󰘬 " .. git_data.head
-  if git_data.added and git_data.added ~= 0 then git = git .. " %#GitsignsAdd# " .. git_data.added end
-  if git_data.changed and git_data.changed ~= 0 then git = git .. " %#GitsignsChange# " .. git_data.changed end
-  if git_data.removed and git_data.removed ~= 0 then git = git .. " %#GitsignsDelete# " .. git_data.removed end
+  if vim.o.columns > 150 then
+    if git_data.added and git_data.added ~= 0 then git = git .. " %#GitsignsAdd# " .. git_data.added end
+    if git_data.changed and git_data.changed ~= 0 then git = git .. " %#GitsignsChange# " .. git_data.changed end
+    if git_data.removed and git_data.removed ~= 0 then git = git .. " %#GitsignsDelete# " .. git_data.removed end
+  end
   return git .. "%#StatusLine#"
 end
 
@@ -81,15 +83,17 @@ local function get_stl_before_pos()
   local encoding = vim.opt.fileencoding:get()
   if #encoding ~= 0 then res = string.upper(encoding) .. " " end
   local lsp = ""
-  if vim.lsp then
-    local err = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.ERROR })
-    local warn = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.WARN })
-    local hint = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.HINT })
-    local info = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.INFO })
-    if err and err ~= 0 then lsp = lsp .. "%#DiagnosticError# " .. err .. " " end
-    if warn and warn ~= 0 then lsp = lsp .. "%#DiagnosticWarn# " .. warn .. " " end
-    if hint and hint ~= 0 then lsp = lsp .. "%#DiagnosticHint# " .. hint .. " " end
-    if info and info ~= 0 then lsp = lsp .. "%#DiagnosticInfo# " .. info .. " " end
+  if vim.lsp and vim.o.columns > 100 then
+    if vim.o.columns > 150 then
+      local err = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.ERROR })
+      local warn = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.WARN })
+      local hint = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.HINT })
+      local info = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.INFO })
+      if err and err ~= 0 then lsp = lsp .. "%#DiagnosticError# " .. err .. " " end
+      if warn and warn ~= 0 then lsp = lsp .. "%#DiagnosticWarn# " .. warn .. " " end
+      if hint and hint ~= 0 then lsp = lsp .. "%#DiagnosticHint# " .. hint .. " " end
+      if info and info ~= 0 then lsp = lsp .. "%#DiagnosticInfo# " .. info .. " " end
+    end
     for _, client in ipairs(vim.lsp.get_clients()) do
       if client.attached_buffers[buf] then
         lsp = lsp .. "%#@function#  " .. client.name
@@ -101,7 +105,7 @@ local function get_stl_before_pos()
       res = lsp .. "%#StatusLine# " .. res
     end
   end
-  if vim.g.grapple then
+  if vim.g.grapple and vim.o.columns > 180 then
     local grapple = require("grapple").statusline()
     if #grapple ~= 0 then
       if #res ~= 0 then res = "| " .. res end
