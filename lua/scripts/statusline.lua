@@ -48,15 +48,26 @@ local function get_stl_mode()
 end
 
 local function get_stl_file()
-  local file = vim.o.columns > 100 and "%f " or "%t "
-  if vim.bo.filetype == "qf" and vim.w.quickfix_title then
-    file = file .. vim.w.quickfix_title .. " "
+  local file = nil
+  if vim.bo.filetype == "qf" then
+    local qf = vim.api.nvim_eval_statusline("%q", {})
+    if #qf ~= 0 then file = qf .. " " end
+    if vim.w.quickfix_title then file = file .. vim.w.quickfix_title .. " " end
+    if not file then file = "???" end
+  else
+    local bufname = vim.fn.fnamemodify(vim.fn.bufname(), ":~:.")
+    if vim.o.columns <= 100 then file = vim.fn.fnamemodify(bufname, ":t")
+    else
+      if #bufname > 50 then
+        file = vim.fn.fnamemodify(bufname, ":t")
+      else file = bufname end
+    end
   end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
   if vals.width > 0 then
-    return "%#Stl_Highlight# " .. file .. vals.str .. " %#StatusLine#"
+    return "%#Stl_Highlight# " .. file .. " " .. vals.str .. " %#StatusLine#"
   end
-  return "%#Stl_Highlight# " .. file .. "%#StatusLine#"
+  return "%#Stl_Highlight# " .. file .. " " .. "%#StatusLine#"
 end
 
 local function get_stl_pos()
@@ -117,7 +128,7 @@ end
 
 _G.get_statusline = function()
   return string.format(
-    "%s%s%s%%=%s%s",
+    "%s%s%s%%=%%<%s%s",
     get_stl_mode(),
     get_stl_file(),
     get_stl_after_file(),
