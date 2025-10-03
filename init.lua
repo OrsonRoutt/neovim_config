@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.g.localleader = ","
 
 -- Bootstrap Lazy.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

@@ -6,6 +6,10 @@ map({"n", "v"}, "<right>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<up>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<down>", "<Nop>", { silent = true, noremap = true })
 
+-- Switch ';' and ':'.
+map({"n", "v"}, ";", ":", {})
+map({"n", "v"}, ":", ";", {})
+
 -- Coq/autopairs mappings.
 vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true, silent = true })
