@@ -6,9 +6,12 @@ map({"n", "v"}, "<right>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<up>", "<Nop>", { silent = true, noremap = true })
 map({"n", "v"}, "<down>", "<Nop>", { silent = true, noremap = true })
 
--- Switch ';' and ':'.
-map({"n", "v"}, ";", ":", {})
-map({"n", "v"}, ":", ";", {})
+-- Smart 'dd'.
+map("n", "dd", function()
+  if vim.api.nvim_get_current_line():match("^%s*$") then
+    return "\"_dd"
+  else return "dd" end
+end, { expr = true })
 
 -- Coq/autopairs mappings.
 vim.api.nvim_set_keymap("i", "<Esc>", [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
@@ -103,6 +106,7 @@ map("n", "K", function()
 end, { desc = "lsp hover or ufo peek folded lines" })
 
 -- Telescope mappings.
+map("n", "<leader><leader>", "<cmd>Telescope resume<CR>", { desc = "telescope resume" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
