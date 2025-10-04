@@ -53,13 +53,10 @@ return {
     config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
   },
   {
-    "mikavilpas/yazi.nvim",
-    cmd = { "Yazi" },
-    dependencies = {{ "nvim-lua/plenary.nvim", lazy = true }},
-    opts = function()
-      require("scripts.themes").load_plugin_hls("yazi")
-      return require("configs.yazi")
-    end,
+    "stevearc/oil.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = function() return require("configs.oil") end,
   },
   {
     "nvim-telescope/telescope.nvim",

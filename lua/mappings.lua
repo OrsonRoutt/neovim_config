@@ -22,6 +22,9 @@ vim.api.nvim_set_keymap("i", "<down>", [[pumvisible() ? "<C-e><down>" : "<down>"
 vim.api.nvim_set_keymap("i", "<CR>", "v:lua.user.CR()", { expr = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<BS>", "v:lua.user.BS()", { expr = true, noremap = true })
 
+-- Oil mappings.
+map("n", "-", "<cmd>Oil<CR>", { desc = "oil open parent directory" })
+
 -- Toggle mouse.
 map("n", "<leader>M", function()
   if (vim.api.nvim_get_option_value("mouse", {}) ~= "a") then
@@ -181,10 +184,6 @@ end, { nargs = "?" })
 map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "git line blame" })
 map("n", "<leader>gc", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "git toggle current line blame" })
 map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git blame buffer" })
-
--- Yazi mappings.
-map("n", "<C-y>", "<cmd>Yazi<CR>", { desc = "open yazi at current file"})
-map("n", "<leader>yc", "<cmd>Yazi cwd<CR>", { desc = "open yazi at current working directory" })
 
 -- Terminal mappings.
 map("n", "<leader>h", function() require("scripts.term").new_split({ split = "below", height = 0.3 })

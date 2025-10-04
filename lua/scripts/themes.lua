@@ -255,10 +255,6 @@ local function create_highlights(vars)
     whichkey = { -- WhichKey
       WhichKeyNormal = { fg = vars.ui.fg, bg = vars.ui.bg_alt },
     },
-    yazi = { -- Yazi
-      YaziFloat = { link = "Normal" },
-      YaziFloatBorder = { link = "WinSeparator" },
-    },
     telescope = { -- Telescope
       TelescopeSelection = { fg = "NONE", bg = vars.vim.search },
       TelescopeSelectionCaret = { fg = vars.code.variable, bg = vars.vim.search },
@@ -292,9 +288,6 @@ local background_hls = {
   whichkey = {
     "WhichKeyNormal",
   },
-  yazi = {
-    "YaziFloat",
-  },
   telescope = {
     "TelescopeNormal",
     "TelescopePreviewNormal",
@@ -307,9 +300,6 @@ local sep_hls = {
   default = {
     "FloatBorder",
     "WinSeparator",
-  },
-  yazi = {
-    "YaziFloatBorder",
   },
   telescope = {
     "TelescopeBorder",
