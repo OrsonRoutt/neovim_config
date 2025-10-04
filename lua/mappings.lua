@@ -194,7 +194,7 @@ map("n", "<A-i>", function() require("scripts.term").tggl_float({ id = 1, width 
 end, { desc = "terminal toggle floating term" })
 
 -- Terminal job mappings.
-map("n", "<C-g>", function()
+map("n", "<leader>gg", function()
   require("scripts.term").tggl_float_job({
     id = 2,
     width = 0.9,
