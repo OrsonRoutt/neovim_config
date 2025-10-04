@@ -55,12 +55,16 @@ local function get_stl_file()
     if vim.w.quickfix_title then file = file .. vim.w.quickfix_title .. " " end
     if not file then file = "???" end
   else
-    local bufname = vim.fn.fnamemodify(vim.fn.bufname(), ":~:.")
-    if vim.o.columns <= 100 then file = vim.fn.fnamemodify(bufname, ":t")
+    local bufname = vim.fn.bufname()
+    if #bufname == 0 then file = "[No Name]"
     else
-      if #bufname > 50 then
-        file = vim.fn.fnamemodify(bufname, ":t")
-      else file = bufname end
+      bufname = vim.fn.fnamemodify(bufname, ":~:.")
+      if vim.o.columns <= 100 then file = vim.fn.fnamemodify(bufname, ":t")
+      else
+        if #bufname > 50 then
+          file = vim.fn.fnamemodify(bufname, ":t")
+        else file = bufname end
+      end
     end
   end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
@@ -71,8 +75,9 @@ local function get_stl_file()
 end
 
 local function get_stl_pos()
-  local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-  return "%#Stl_Highlight#  " .. cwd .. " | %l/%L, %c "
+  local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~:t")
+  if cwd == "" or cwd == "." then return "%#Stl_Highlight# %l/%L, %c "
+  else return "%#Stl_Highlight#  " .. cwd .. " | %l/%L, %c " end
 end
 
 local function get_stl_after_file()
@@ -100,10 +105,10 @@ local function get_stl_before_pos()
       local warn = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.WARN })
       local hint = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.HINT })
       local info = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity.INFO })
-      if err and err ~= 0 then lsp = lsp .. "%#DiagnosticError# " .. err .. " " end
-      if warn and warn ~= 0 then lsp = lsp .. "%#DiagnosticWarn# " .. warn .. " " end
-      if hint and hint ~= 0 then lsp = lsp .. "%#DiagnosticHint# " .. hint .. " " end
-      if info and info ~= 0 then lsp = lsp .. "%#DiagnosticInfo# " .. info .. " " end
+      if err and err ~= 0 then lsp = lsp .. "%#DiagnosticError#󰅙 " .. err .. " " end
+      if warn and warn ~= 0 then lsp = lsp .. "%#DiagnosticWarn# " .. warn .. " " end
+      if hint and hint ~= 0 then lsp = lsp .. "%#DiagnosticHint#󰌵 " .. hint .. " " end
+      if info and info ~= 0 then lsp = lsp .. "%#DiagnosticInfo# " .. info .. " " end
     end
     for _, client in ipairs(vim.lsp.get_clients()) do
       if client.attached_buffers[buf] then
@@ -128,7 +133,7 @@ end
 
 _G.get_statusline = function()
   return string.format(
-    "%s%s%s%%=%%<%s%s",
+    "%s%s%%<%s%%=%s%s",
     get_stl_mode(),
     get_stl_file(),
     get_stl_after_file(),
