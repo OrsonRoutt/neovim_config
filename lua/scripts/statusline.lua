@@ -59,15 +59,16 @@ local function get_stl_file()
     if #bufname == 0 then file = "[No Name] "
     else
       bufname = vim.fn.fnamemodify(bufname, ":~:.")
-      if vim.o.columns <= 100 then file = vim.fn.fnamemodify(bufname, ":t")
+      if vim.o.columns > 100 and #bufname <= 50 then
+        file = bufname
       else
-        if #bufname > 50 then
-          file = vim.fn.fnamemodify(bufname, ":t")
-        else file = bufname end
+        file = vim.fn.fnamemodify(bufname, ":t")
+        if #file == 0 then file = vim.fn.fnamemodify(bufname, ":h:t") .. require("scripts.utils").pathsep end
       end
       file = file .. " "
     end
   end
+  if #file > 50 then file = "..." .. file:sub(-47) end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
   if vals.width ~= 0 then
     return "%#Stl_Highlight# " .. file .. vals.str .. " %#StatusLine#"

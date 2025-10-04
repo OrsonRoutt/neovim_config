@@ -68,7 +68,5 @@ g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
-local win = vim.fn.has("win32") ~= 0
-local sep = win and "\\" or "/"
-local delim = win and ";" or ":"
-vim.env.PATH = vim.fn.stdpath("data") .. sep .. "mason" .. sep .. "bin" .. delim .. vim.env.PATH
+local u = require("scripts.utils")
+vim.env.PATH = vim.fn.stdpath("data") .. u.pathsep .. "mason" .. u.pathsep .. "bin" .. u.pdelim .. vim.env.PATH
