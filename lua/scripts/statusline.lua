@@ -68,7 +68,7 @@ local function get_stl_file()
       file = file .. " "
     end
   end
-  if #file > 50 then file = "..." .. file:sub(-47) end
+  if #file > 51 then file = "..." .. file:sub(-48) end
   local vals = vim.api.nvim_eval_statusline("%m%r%h%w", {})
   if vals.width ~= 0 then
     return "%#Stl_Highlight# " .. file .. vals.str .. " %#StatusLine#"
@@ -78,8 +78,9 @@ end
 
 local function get_stl_pos()
   local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~:t")
-  if cwd == "" or cwd == "." then return "%#Stl_Highlight# %l/%L, %c "
-  else return "%#Stl_Highlight#  " .. cwd .. " | %l/%L, %c " end
+  if cwd == "" or cwd == "." then return "%#Stl_Highlight# %l/%L, %c " end
+  if #cwd > 50 then cwd = "..." .. cwd:sub(-47) end
+  return "%#Stl_Highlight#  " .. cwd .. " | %l/%L, %c "
 end
 
 local function get_stl_after_file()
